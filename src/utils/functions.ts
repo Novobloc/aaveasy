@@ -7,16 +7,16 @@ export const getAllBalances = async (walletAddress: string) => {
     jsonrpc: "2.0",
     method: "alchemy_getTokenBalances",
     params: [walletAddress],
-    id: "1",
+    id: "1"
   });
 
   const config: AxiosRequestConfig = {
     method: "post",
     url: "https://polygon-mumbai.g.alchemy.com/v2/3jhc6GGw5LCvFa4HR12QFXoynv9THywA",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json"
     },
-    data: data,
+    data: data
   };
 
   const response: AxiosResponse = await axios(config);
@@ -24,7 +24,6 @@ export const getAllBalances = async (walletAddress: string) => {
   const promises = await tokenBalances.map(async (item: any) => {
     const val = await getTokenMetaData(item.contractAddress);
     const amount = item.tokenBalance / Math.pow(10, val.decimals);
-    console.log(val, "val");
     item.meta = val;
     item.amount = amount;
     item.meta.viewURL = `https://mumbai.polygonscan.com/address/${walletAddress}#tokentxns`;
@@ -39,16 +38,16 @@ export const getTokenMetaData = async (tokenAddress: string) => {
     jsonrpc: "2.0",
     method: "alchemy_getTokenMetadata",
     params: [tokenAddress],
-    id: "1",
+    id: "1"
   });
 
   const config: AxiosRequestConfig = {
     method: "post",
     url: "https://polygon-mumbai.g.alchemy.com/v2/3jhc6GGw5LCvFa4HR12QFXoynv9THywA",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json"
     },
-    data: data,
+    data: data
   };
 
   const response: AxiosResponse = await axios(config);
@@ -61,20 +60,20 @@ export const getLogo = async (tokenSymbol: string) => {
   const tokenConfig = [
     {
       symbol: "MATIC",
-      imageUrl: "https://assets-stg.transak.com/images/cryptoCurrency/matic-network_small.png",
+      imageUrl: "https://assets-stg.transak.com/images/cryptoCurrency/matic-network_small.png"
     },
     {
       symbol: "ETH",
-      imageUrl: "https://assets-stg.transak.com/images/cryptoCurrency/ethereum_small.png",
+      imageUrl: "https://assets-stg.transak.com/images/cryptoCurrency/ethereum_small.png"
     },
     {
       symbol: "DAI",
-      imageUrl: "https://assets-stg.transak.com/images/cryptoCurrency/dai_small.png",
+      imageUrl: "https://assets-stg.transak.com/images/cryptoCurrency/dai_small.png"
     },
     {
       symbol: "USDC",
-      imageUrl: "https://assets-stg.transak.com/images/cryptoCurrency/usd-coin_small.png",
-    },
+      imageUrl: "https://assets-stg.transak.com/images/cryptoCurrency/usd-coin_small.png"
+    }
   ];
   const logo = await tokenConfig.find((it) => tokenSymbol.includes(it.symbol))?.imageUrl;
   return logo;
@@ -88,7 +87,7 @@ export const withDrawBalance = async (smartAccount: SmartAccount, contractAddres
 
   const tx1 = {
     to: contractAddress, //APOLDAI
-    data,
+    data
   };
 
   // Transaction subscription
@@ -111,17 +110,17 @@ export const withDrawBalance = async (smartAccount: SmartAccount, contractAddres
 
   const transaction = await smartAccount.createRefundTransaction({
     transaction: tx1,
-    feeQuote: feeQuotes[0], // say user chooses MATIC from above
+    feeQuote: feeQuotes[0] // say user chooses MATIC from above
   });
 
   const gasLimit = {
     hex: "0x1E8480",
-    type: "hex",
+    type: "hex"
   };
 
   const txId = await smartAccount.sendTransaction({
     tx: transaction, // temp
-    gasLimit,
+    gasLimit
   });
   console.log(txId, "txId");
   return txId;

@@ -22,7 +22,7 @@ export const Web3AuthProvider = ({ children }: any) => {
 
   // Contains all the information about the SocialLOgain
   const [socialLoginSDK, setSocialLoginSDK] = useState<SocialLogin | null>(null);
-  const deployedUrl = "";
+  const deployedUrl = window.location.origin || "http://localhost:3000";
   /**
    * create socialLoginSDK and call the init
    */

@@ -17,7 +17,9 @@ const Index = () => {
     <GlobalProvider>
       <Web3AuthProvider>
         <SmartAccountProvider>
-          <App />
+          <div className="app-container app-theme-white flex flex-col w-full text-gray-700 bg-white">
+            <App />
+          </div>
         </SmartAccountProvider>
       </Web3AuthProvider>
     </GlobalProvider>

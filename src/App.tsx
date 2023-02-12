@@ -4,11 +4,11 @@ import { useSmartAccountContext } from "./context/SmartAccountContext/SmartAccou
 import { useGlobalContext } from "./context/GlobalContext/GlobalContext";
 import Loader from "./layouts/Loader";
 import Home from "./components/Home";
+import AaveApp from "./components/AaveApp";
 import { useWeb3AuthContext } from "./context/SocialLoginContext/SocialLoginContext";
 
 /** Layout */
 import Header from "./layouts/Header";
-// import Footer from "./layouts/Footer";
 
 const App = () => {
   const { loading } = useSmartAccountContext();
@@ -22,9 +22,8 @@ const App = () => {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/app" element={<Home />} />
+        <Route path="/app" element={<AaveApp />} />
       </Routes>
-      {/* <Footer /> */}
     </Router>
   );
 };
