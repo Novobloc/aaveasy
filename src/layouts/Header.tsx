@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { Fragment, useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { ellipseAddress } from "../utils";
 import { Menu, Transition, Dialog } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
@@ -17,16 +17,30 @@ function classNames(...classes: any) {
 }
 
 export default function Header() {
-  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
   const auth = useAuth();
-  const selectedAccount: any = auth.user;
+  const [open, setOpen] = useState(false);
+  const [account, setAccount]: any = useState(null);
+
+  useEffect(() => {
+    if (auth.isLoggedIn) {
+      const user: any = auth.user;
+      setAccount(user);
+    }
+  }, []);
+
   const disconnectWallet = () => {
     auth.logout();
+    setAccount(null);
+    return navigate("/");
   };
 
   const onLogin = () => {
     // Route to authenticated page
-    console.log(auth, "auth");
+    const user: any = auth.user;
+    setAccount(user);
+    closeModal();
+    return navigate("/app");
   };
 
   const connectWallet = () => {
@@ -56,7 +70,7 @@ export default function Header() {
           </nav>
         </div>
         <div className="inline-flex items-center ml-1 space-x-5 lg:justify-end">
-          {!selectedAccount && (
+          {!account && (
             <button
               disabled={false}
               onClick={connectWallet}
@@ -65,14 +79,14 @@ export default function Header() {
             </button>
           )}
 
-          {selectedAccount && selectedAccount.address && (
+          {account && account.address && (
             <div className="flex-none justify-end mr-0">
               <Menu as="div" className="relative">
                 <div>
                   <Menu.Button className="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 lg:rounded-md lg:p-2 lg:hover:bg-gray-50">
                     <span className="ml-3 hidden text-sm font-medium text-gray-700 lg:block">
                       <span className="sr-only">Open user menu for </span>
-                      {ellipseAddress(selectedAccount.address, 12)}
+                      {ellipseAddress(account.address, 12)}
                     </span>
                     <ChevronDownIcon className="ml-1 hidden h-5 w-5 flex-shrink-0 text-gray-400 lg:block" aria-hidden="true" />
                   </Menu.Button>
@@ -89,7 +103,7 @@ export default function Header() {
                     <Menu.Item>
                       {({ active }) => (
                         <button
-                          onClick={() => navigator.clipboard.writeText(selectedAccount.address)}
+                          onClick={() => navigator.clipboard.writeText(account.address)}
                           className={classNames(active ? "bg-gray-100" : "", "px-4 py-2 text-sm text-gray-700 flex w-full")}>
                           <Square2StackIcon height={18} className="mt-1" />
                           <span className="ml-3 mt-1">Copy Address</span>
@@ -99,7 +113,7 @@ export default function Header() {
                     <Menu.Item>
                       {({ active }) => (
                         <a
-                          href={`https://mumbai.polygonscan.com/address/${selectedAccount.address}`}
+                          href={`https://mumbai.polygonscan.com/address/${account.address}`}
                           target="_blank"
                           rel="noreferrer"
                           className={classNames(active ? "bg-gray-100" : "", "px-4 py-2 text-sm text-gray-700 flex")}>
