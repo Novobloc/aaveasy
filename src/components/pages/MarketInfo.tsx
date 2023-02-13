@@ -29,7 +29,6 @@ export default function MarketInfo() {
   useEffect(() => {
     (async () => {
       const data = await aaveMarketInfo();
-      console.log(data, "data");
       setAssetList(data);
     })();
   }, []);
