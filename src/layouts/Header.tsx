@@ -1,12 +1,10 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
-
 import { ellipseAddress } from "../utils";
-import { Menu, Transition } from "@headlessui/react";
+import { Menu, Transition, Dialog } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { ArrowTopRightOnSquareIcon, ArrowLeftOnRectangleIcon, Square2StackIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import { Auth, useAuth } from "@arcana/auth-react";
-
 const paths = [
   {
     path: "/app",
@@ -19,10 +17,24 @@ function classNames(...classes: any) {
 }
 
 export default function Header() {
+  const [open, setOpen] = useState(false);
   const auth = useAuth();
   const selectedAccount: any = auth.user;
   const disconnectWallet = () => {
     auth.logout();
+  };
+
+  const onLogin = () => {
+    // Route to authenticated page
+    console.log(auth, "auth");
+  };
+
+  const connectWallet = () => {
+    setOpen(true);
+  };
+
+  const closeModal = () => {
+    setOpen(false);
   };
 
   return (
@@ -47,10 +59,12 @@ export default function Header() {
           {!selectedAccount && (
             <button
               disabled={false}
+              onClick={connectWallet}
               className="flex w-32 justify-center rounded-md border border-transparent bg-gray-900 py-1 px-0 text-base font-medium text-white shadow hover:bg-black focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-rose-500">
               Connect Wallet
             </button>
           )}
+
           {selectedAccount && selectedAccount.address && (
             <div className="flex-none justify-end mr-0">
               <Menu as="div" className="relative">
@@ -111,6 +125,37 @@ export default function Header() {
           )}
         </div>
       </div>
+      <Transition.Root show={open} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={setOpen}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0">
+            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 z-10 overflow-y-auto ">
+            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                enterTo="opacity-100 translate-y-0 sm:scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+                <Dialog.Panel>
+                  <Auth externalWallet={true} theme={"dark"} onLogin={onLogin} />
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition.Root>
     </section>
   );
 }

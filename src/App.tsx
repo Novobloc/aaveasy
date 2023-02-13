@@ -21,7 +21,7 @@ function App() {
     <div>
       {auth.loading ? (
         <Loader />
-      ) : auth.isLoggedIn ? (
+      ) : (
         <div className="app-container app-theme-white flex flex-col w-full text-gray-700 bg-white">
           <Router>
             <Header />
@@ -30,10 +30,6 @@ function App() {
               <Route path="/app" element={<AaveApp />} />
             </Routes>
           </Router>
-        </div>
-      ) : (
-        <div>
-          <Auth externalWallet={false} theme={"light"} onLogin={onLogin} />
         </div>
       )}
     </div>
