@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { BigNumber, ethers } from "ethers";
-import SmartAccount from "@biconomy/smart-account";
+
 
 export const getAllBalances = async (walletAddress: string) => {
   const data = JSON.stringify({
@@ -79,7 +79,7 @@ export const getLogo = async (tokenSymbol: string) => {
   return logo;
 };
 
-export const withDrawBalance = async (smartAccount: SmartAccount, contractAddress: string, recipient: string, amount: BigNumber) => {
+export const withDrawBalance = async (smartAccount: any, contractAddress: string, recipient: string, amount: BigNumber) => {
   const erc20Interface = new ethers.utils.Interface(["function transfer(address _to, uint256 _value)"]);
 
   // Encode an ERC-20 token transfer to recipient of the specified amount
