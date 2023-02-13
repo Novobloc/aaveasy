@@ -1,7 +1,5 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-
-// import { useGlobalContext } from "./context/GlobalContext/GlobalContext";
 import Loader from "./layouts/Loader";
 import Home from "./components/Home";
 import AaveApp from "./components/AaveApp";
