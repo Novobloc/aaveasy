@@ -22,15 +22,13 @@ function App() {
       {auth.loading ? (
         <Loader />
       ) : (
-        <div className="app-container app-theme-white flex flex-col w-full text-gray-700 bg-white">
-          <Router>
-            <Header />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/app" element={<AaveApp />} />
-            </Routes>
-          </Router>
-        </div>
+        <Router>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/app" element={<AaveApp />} />
+          </Routes>
+        </Router>
       )}
     </div>
   );
