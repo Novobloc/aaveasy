@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@arcana/auth": "^1.0.1",
+    "@arcana/auth-react": "^0.0.3",
     "@biconomy/core-types": "0.0.2",
     "@biconomy/relayer": "0.0.2",
     "@biconomy/smart-account": "^0.0.4",
