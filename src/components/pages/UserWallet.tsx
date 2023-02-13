@@ -1,13 +1,13 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { ArrowTopRightOnSquareIcon, ArrowDownOnSquareIcon } from "@heroicons/react/20/solid";
-import { useSmartAccountContext } from "../../context/SmartAccountContext/SmartAccountContext";
+// import { useSmartAccountContext } from "../../context/SmartAccountContext/SmartAccountContext";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon, ArrowPathIcon } from "@heroicons/react/24/outline";
 import { getAllBalances, withDrawBalance } from "../../utils/functions";
 import { ethers } from "ethers";
 
 export default function Example() {
-  const { selectedAccount, wallet }: any = useSmartAccountContext();
+  const selectedAccount = {smartAccountAddress:"" } , wallet = {} 
   const [tokenBalances, setTokenBalances] = useState([]);
   const [open, setOpen] = useState(false);
   const [address, setAddress] = useState("");
@@ -45,18 +45,18 @@ export default function Example() {
     const contractAddress = token.contractAddress;
     const parsedAmount = ethers.utils.parseEther(amount.toString());
 
-    const txId = await withDrawBalance(wallet, contractAddress, recipient, parsedAmount);
+    // const txId = await withDrawBalance(wallet, contractAddress, recipient, parsedAmount);
 
-    if (txId) {
-      wallet.on("txMined", async (response: any) => {
-        console.log("txMined event received via emitter", response);
-        if (response) {
-          setLoading(false);
-          refreshBalances();
-          closeModal();
-        }
-      });
-    }
+    // if (txId) {
+    //   wallet.on("txMined", async (response: any) => {
+    //     console.log("txMined event received via emitter", response);
+    //     if (response) {
+    //       setLoading(false);
+    //       refreshBalances();
+    //       closeModal();
+    //     }
+    //   });
+    // }
   };
 
   const closeModal = () => {

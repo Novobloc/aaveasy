@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
-import { useSmartAccountContext } from "../context/SmartAccountContext/SmartAccountContext";
-import { useWeb3AuthContext } from "../context/SocialLoginContext/SocialLoginContext";
+
 import { ellipseAddress } from "../utils";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
@@ -14,18 +13,14 @@ const paths = [
   }
 ];
 
-function classNames(...classes: string[]) {
+function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Header() {
-  const { connect, disconnect } = useWeb3AuthContext();
-  const { selectedAccount, setSelectedAccount }: any = useSmartAccountContext();
 
-  const disconnectWallet = () => {
-    disconnect();
-    setSelectedAccount(null);
-  };
+  const selectedAccount = { smartAccountAddress: "0x1234567890" };
+  const disconnectWallet = () => {};
 
   return (
     <section className="w-full px-8 text-gray-700 bg-white">
@@ -60,8 +55,8 @@ export default function Header() {
 
           {!selectedAccount && (
             <button
-              disabled={selectedAccount && selectedAccount.smartAccountAddress ? true : false}
-              onClick={connect}
+              disabled={false}
+              // onClick={connect}
               className="flex w-32 justify-center rounded-md border border-transparent bg-gray-900 py-1 px-0 text-base font-medium text-white shadow hover:bg-black focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-rose-500">
               Connect Wallet
             </button>
