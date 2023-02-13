@@ -33,7 +33,7 @@ function App() {
         </div>
       ) : (
         <div>
-          <Auth externalWallet={true} theme={"light"} onLogin={onLogin} />
+          <Auth externalWallet={false} theme={"light"} onLogin={onLogin} />
         </div>
       )}
     </div>
