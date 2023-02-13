@@ -1,6 +1,3 @@
-import { SmartAccountState } from "@biconomy/core-types";
-import SmartAccount from "@biconomy/smart-account";
-import SocialLogin from "@biconomy/web3-auth";
 import { ethers } from "ethers";
 
 //  Global Context
@@ -40,31 +37,9 @@ export type ISmartAccount = {
   smartAccountAddress: string;
   isDeployed: boolean;
 };
-export type smartAccountContextType = {
-  wallet: SmartAccount | null;
-  state: SmartAccountState | null;
-  balance: Balance;
-  loading: boolean;
-  isFetchingBalance: boolean;
-  selectedAccount: ISmartAccount | null;
-  smartAccountsArray: ISmartAccount[];
-  setSelectedAccount: React.Dispatch<React.SetStateAction<ISmartAccount | null>>;
-  getSmartAccount: () => Promise<string>;
-  getSmartAccountBalance: () => Promise<string>;
-};
 
-// Social login context
-export interface web3AuthContextType {
-  connect: () => Promise<SocialLogin | null | undefined>;
-  disconnect: () => Promise<void>;
-  provider: any;
-  ethersProvider: ethers.providers.Web3Provider | null;
-  web3Provider: ethers.providers.Web3Provider | null;
-  loading: boolean;
-  chainId: number;
-  address: string;
-  userInfo?: any;
-}
+
+
 
 export enum SignTypeMethod {
   PERSONAL_SIGN = "PERSONAL_SIGN",
