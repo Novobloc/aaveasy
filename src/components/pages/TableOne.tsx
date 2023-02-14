@@ -20,7 +20,7 @@ export default function AssetsToSupply() {
         <div className="bg-white pt-6 shadow sm:overflow-hidden sm:rounded-md">
           <div className="px-4 sm:px-6">
             <h2 id="billing-history-heading" className="leading-6 text-xl font-semibold text-gray-900">
-              Assets to supply
+              Supplied Assets
             </h2>
           </div>
           <div className="mt-6 flex flex-col">

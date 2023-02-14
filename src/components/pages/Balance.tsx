@@ -2,9 +2,8 @@ import React from "react";
 import { CurrencyDollarIcon, BanknotesIcon, CreditCardIcon } from "@heroicons/react/24/outline";
 
 const stats = [
-  { name: "Supply Balance", icon: CreditCardIcon, amount: "2.76", currency: "LINK" },
-  { name: "Borrow Balance", icon: BanknotesIcon, amount: "5.34", currency: "LINK" },
   { name: "Net worth", icon: CurrencyDollarIcon, amount: "240.57", currency: "USD" }
+  // { name: "Borrow Balance", icon: BanknotesIcon, amount: "5.34", currency: "LINK" }
 ];
 
 export default function Example() {
