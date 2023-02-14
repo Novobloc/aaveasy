@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import TableOne from "./pages/TableOne";
-import TableTwo from "./pages/TableTwo";
-import MarketInfo from "./pages/MarketInfo";
+
+import MarketPortfolio from "./pages/MarketPortfolio";
 import Balance from "./pages/Balance";
 
 export default class App extends Component {
@@ -19,7 +18,7 @@ export default class App extends Component {
                 </div>
               </div>
 
-              <main className="mx-auto max-w-7xl pb-10 lg:py-6 lg:px-8">
+              {/* <main className="mx-auto max-w-7xl pb-10 lg:py-6 lg:px-8">
                 <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
                   <div className="space-y-6 sm:px-6 lg:col-span-6 lg:px-0">
                     <TableOne />
@@ -28,12 +27,12 @@ export default class App extends Component {
                     <TableTwo />
                   </div>
                 </div>
-              </main>
+              </main> */}
 
               <div className="mx-auto max-w-7xl pb-10 lg:py-6 lg:px-8">
                 <div className="sm:flex sm:items-center">
                   <div className="sm:flex-auto">
-                    <MarketInfo />
+                    <MarketPortfolio />
                   </div>
                 </div>
               </div>
