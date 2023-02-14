@@ -1,5 +1,5 @@
 import React from "react";
-import { CurrencyDollarIcon, ArrowRightIcon, PaperAirplaneIcon, ArrowUpIcon } from "@heroicons/react/20/solid";
+import { CurrencyDollarIcon, ArrowRightIcon, PaperAirplaneIcon, ArrowUpIcon, ArrowDownIcon } from "@heroicons/react/20/solid";
 
 const project = { name: "Net worth", amount: "240.57", href: "#", currency: "USD", bgColor: "bg-pink-600", icon: CurrencyDollarIcon };
 
@@ -33,12 +33,12 @@ export default function Example() {
           <button
             type="button"
             className="mr-7 ml-7 inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-            <PaperAirplaneIcon className="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
+            <ArrowDownIcon className="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
             Buy Crypto
           </button>
           <button
             type="button"
-            className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            className="inline-flex items-center rounded-md border border-transparent bg-red-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
             <ArrowUpIcon className="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
             Sell Crypto
           </button>

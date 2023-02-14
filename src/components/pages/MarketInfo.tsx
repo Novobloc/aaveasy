@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { aaveMarketInfo } from "../../utils/functions";
+import { ArrowTopRightOnSquareIcon } from "@heroicons/react/20/solid";
 
 const initialAssetList = [
   {
@@ -103,8 +104,8 @@ export default function MarketInfo() {
                               )}
                             </td>
                             <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
-                              <a href={asset.explorerLink} className="text-orange-600 hover:text-orange-900">
-                                View
+                              <a href={`https://mumbai.polygonscan.com/address/${asset.underlyingAsset}`} target="_blank" rel="noreferrer">
+                                <ArrowTopRightOnSquareIcon />
                               </a>
                             </td>
                           </tr>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getAllBalances } from "../../utils/functions";
 import { useAuth } from "@arcana/auth-react";
+import { ArrowRightIcon } from "@heroicons/react/20/solid";
 
 export default function AssetsToSupply() {
   const [assetList, setAssetList] = useState([]);
@@ -55,12 +56,12 @@ export default function AssetsToSupply() {
                           <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.amount} %</td>
                           <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                             <a href={asset.explorerLink} className="text-orange-600 hover:text-orange-900">
-                              Supply
+                              Withdraw
                             </a>
                           </td>
                           <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
                             <a href={asset.meta.viewURL} className="text-orange-600 hover:text-orange-900">
-                              View
+                              <ArrowRightIcon />
                             </a>
                           </td>
                         </tr>
