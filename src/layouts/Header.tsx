@@ -1,20 +1,17 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ellipseAddress } from "../utils";
+import { ellipseAddress, classNames } from "../utils";
 import { Menu, Transition, Dialog } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { ArrowTopRightOnSquareIcon, ArrowLeftOnRectangleIcon, Square2StackIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import { Auth, useAuth } from "@arcana/auth-react";
+
 const paths = [
   {
     path: "/app",
     name: "App"
   }
 ];
-
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(" ");
-}
 
 export default function Header() {
   const navigate = useNavigate();
@@ -163,7 +160,7 @@ export default function Header() {
                 leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
                 <Dialog.Panel>
-                  <Auth externalWallet={true} theme={"dark"} onLogin={onLogin} />
+                  <Auth externalWallet={false} theme={"dark"} onLogin={onLogin} />
                 </Dialog.Panel>
               </Transition.Child>
             </div>

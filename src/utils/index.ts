@@ -33,3 +33,8 @@ export const formatBalance = (value: string, decimals: number) => {
   // let res = ethers.utils.formatEther(balance);
   return balance.toString();
 };
+
+
+export function classNames(...classes: any) {
+  return classes.filter(Boolean).join(" ");
+}
