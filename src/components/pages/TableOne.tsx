@@ -1,17 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getAllBalances } from "../../utils/functions";
+import { useAuth } from "@arcana/auth-react";
 
-const payments = [
-  {
-    id: 1,
-    date: "1/1/2020",
-    datetime: "2020-01-01",
-    description: "Business Plan - Annual Billing",
-    amount: "CA$109.00",
-    href: "#"
-  }
-];
+export default function AssetsToSupply() {
+  const [assetList, setAssetList] = useState([]);
+  const auth = useAuth();
+  const user: any = auth.user;
 
-export default function Example() {
+  useEffect(() => {
+    (async () => {
+      const data: any = await getAllBalances("0xb21654C6A18D2d4446548a534b8E8e87BBEfA0EC");
+      setAssetList(data);
+    })();
+  }, []);
+
   return (
     <>
       <section aria-labelledby="billing-history-heading">
@@ -29,33 +31,36 @@ export default function Example() {
                     <thead className="bg-gray-50">
                       <tr>
                         <th scope="col" className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
-                          Date
+                          Symbol
                         </th>
                         <th scope="col" className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
-                          Description
+                          Balance
                         </th>
                         <th scope="col" className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
-                          Amount
+                          APY
                         </th>
-                        {/*
-                                  `relative` is added here due to a weird bug in Safari that causes `sr-only` headings to introduce overflow on the body on mobile.
-                                */}
+                        <th scope="col" className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
+                          Action
+                        </th>
                         <th scope="col" className="relative px-6 py-3 text-left text-sm font-medium text-gray-500">
                           <span className="sr-only">View receipt</span>
                         </th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200 bg-white">
-                      {payments.map((payment) => (
-                        <tr key={payment.id}>
-                          <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
-                            <time dateTime={payment.datetime}>{payment.date}</time>
+                      {assetList.map((asset: any) => (
+                        <tr key={asset.contractAddress}>
+                          <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.meta.symbol}</td>
+                          <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.amount}</td>
+                          <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.amount} %</td>
+                          <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                            <a href={asset.explorerLink} className="text-orange-600 hover:text-orange-900">
+                              Supply
+                            </a>
                           </td>
-                          <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{payment.description}</td>
-                          <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{payment.amount}</td>
                           <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
-                            <a href={payment.href} className="text-orange-600 hover:text-orange-900">
-                              View receipt
+                            <a href={asset.meta.viewURL} className="text-orange-600 hover:text-orange-900">
+                              View
                             </a>
                           </td>
                         </tr>

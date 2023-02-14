@@ -15,26 +15,23 @@ const paths = [
 
 export default function Header() {
   const navigate = useNavigate();
-  const auth = useAuth();
+  const { loading, isLoggedIn, user, logout } = useAuth();
   const [open, setOpen] = useState(false);
   const [account, setAccount]: any = useState(null);
 
   useEffect(() => {
-    if (auth.isLoggedIn) {
-      const user: any = auth.user;
+    if (isLoggedIn) {
       setAccount(user);
     }
-  }, []);
+  }, [loading, isLoggedIn, user]);
 
-  const disconnectWallet = () => {
-    auth.logout();
+  const disconnectWallet = async () => {
+    await logout();
     setAccount(null);
     return navigate("/");
   };
 
   const onLogin = () => {
-    // Route to authenticated page
-    const user: any = auth.user;
     setAccount(user);
     closeModal();
     return navigate("/app");

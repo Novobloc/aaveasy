@@ -7,27 +7,16 @@ import AaveApp from "./components/AaveApp";
 /** Layout */
 import Header from "./layouts/Header";
 
-import { Auth, useAuth } from "@arcana/auth-react";
-
-const onLogin = () => {
-  // Route to authenticated page
-};
-
 function App() {
-  const auth = useAuth();
   return (
     <div>
-      {auth.loading ? (
-        <Loader />
-      ) : (
-        <Router>
-          <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/app" element={<AaveApp />} />
-          </Routes>
-        </Router>
-      )}
+      <Router>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/app" element={<AaveApp />} />
+        </Routes>
+      </Router>
     </div>
   );
 }

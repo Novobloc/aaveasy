@@ -1,7 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { BigNumber, ethers } from "ethers";
 
-
 export const getAllBalances = async (walletAddress: string) => {
   const data = JSON.stringify({
     jsonrpc: "2.0",
@@ -124,4 +123,14 @@ export const withDrawBalance = async (smartAccount: any, contractAddress: string
   });
   console.log(txId, "txId");
   return txId;
+};
+
+export const aaveMarketInfo = async () => {
+  const config: AxiosRequestConfig = {
+    method: "get",
+    url: "https://aave-api-v2.aave.com/data/markets-data"
+  };
+  const response: AxiosResponse = await axios(config);
+  const data = response?.data?.reserves;
+  return data;
 };
