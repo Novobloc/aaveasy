@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getAllBalances } from "../../utils/functions";
-import TableOne from "./TableOne";
-import TableTwo from "./TableTwo";
+import AssetsSupplied from "./AssetsSupplied";
+import AssetsBorrowed from "./AssetsBorrowed";
 export default function Portfolio() {
   const [assetList, setAssetList] = useState([]);
 
@@ -19,10 +19,10 @@ export default function Portfolio() {
           <main className="mx-auto max-w-7xl pb-10 lg:py-6 lg:px-8">
             <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
               <div className="space-y-6 sm:px-6 lg:col-span-6 lg:px-0">
-                <TableOne />
+                <AssetsSupplied />
               </div>
               <div className="space-y-6 sm:px-6 lg:col-span-6 lg:px-0">
-                <TableTwo />
+                <AssetsBorrowed />
               </div>
             </div>
           </main>

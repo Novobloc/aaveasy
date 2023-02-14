@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import MarketPortfolio from "./pages/MarketPortfolio";
-import Balance from "./pages/Balance";
+import Statistics from "./pages/Statistics";
 
 export default class App extends Component {
   render() {
@@ -13,21 +13,10 @@ export default class App extends Component {
               <div className="mx-auto max-w-7xl pb-10 lg:py-6 lg:px-8">
                 <div className="sm:flex sm:items-center">
                   <div className="sm:flex-auto">
-                    <Balance />
+                    <Statistics />
                   </div>
                 </div>
               </div>
-
-              {/* <main className="mx-auto max-w-7xl pb-10 lg:py-6 lg:px-8">
-                <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
-                  <div className="space-y-6 sm:px-6 lg:col-span-6 lg:px-0">
-                    <TableOne />
-                  </div>
-                  <div className="space-y-6 sm:px-6 lg:col-span-6 lg:px-0">
-                    <TableTwo />
-                  </div>
-                </div>
-              </main> */}
 
               <div className="mx-auto max-w-7xl pb-10 lg:py-6 lg:px-8">
                 <div className="sm:flex sm:items-center">
