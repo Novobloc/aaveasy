@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import { getAllBalances } from "../../utils/functions";
 import AssetsSupplied from "./AssetsSupplied";
 import AssetsBorrowed from "./AssetsBorrowed";
+import { useAuth } from "@arcana/auth-react";
+
 export default function Portfolio() {
   const [assetList, setAssetList] = useState([]);
+  const { user }: any = useAuth();
 
   useEffect(() => {
     (async () => {
-      const data: any = await getAllBalances("0xb21654C6A18D2d4446548a534b8E8e87BBEfA0EC");
+      const data: any = await getAllBalances(user.address);
       setAssetList(data);
     })();
   }, []);
