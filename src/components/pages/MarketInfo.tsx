@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { aaveMarketInfo } from "../../utils/functions";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/20/solid";
+import  { supply } from "../../utils/aaveFunctions";
 
 const initialAssetList = [
   {
@@ -93,7 +94,7 @@ export default function MarketInfo() {
                                 Buy / Sell
                               </a>
                               &nbsp; &nbsp; &nbsp; &nbsp;
-                              <a href={asset.explorerLink} className="text-orange-600 hover:text-orange-900">
+                              <a href={asset.explorerLink} className="text-orange-600 hover:text-orange-900" onClick={supply}>
                                 Supply
                               </a>
                               &nbsp; &nbsp; &nbsp; &nbsp;

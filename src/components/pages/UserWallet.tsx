@@ -1,6 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { ArrowTopRightOnSquareIcon, ArrowDownOnSquareIcon } from "@heroicons/react/20/solid";
-// import { useSmartAccountContext } from "../../context/SmartAccountContext/SmartAccountContext";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon, ArrowPathIcon } from "@heroicons/react/24/outline";
 import { getAllBalances, withDrawBalance } from "../../utils/functions";
