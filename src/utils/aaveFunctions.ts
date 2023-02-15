@@ -16,7 +16,7 @@ export const supply = async () => {
     amount: "0.1"
   });
 
-  console.log("txs: ", txs);
+  console.log("txs : ", txs);
 
   // If the user has not approved the pool contract to spend their tokens, txs will also contain two transactions: approve and supply. These approval and supply transactions can be submitted just as in V2,OR
   //   you can skip the first approval transaction with a gasless signature by using signERC20Approval -> supplyWithPermit which are documented below
@@ -29,7 +29,7 @@ export const supply = async () => {
 // Signing transactions requires a wallet provider, Aave UI currently uses web3-react (https://github.com/NoahZinsmeister/web3-react) for connecting wallets and accessing the wallet provider
 
 const submitTransaction = async (provider: any, txs: any) => {
-  const extendedTxData = await txs[1].tx();
+  const extendedTxData = await txs[0].tx();
   const { from, ...txData } = extendedTxData;
   const signer = provider.getSigner();
   const txResponse = await signer.sendTransaction({
@@ -38,4 +38,15 @@ const submitTransaction = async (provider: any, txs: any) => {
   });
 
   console.log("txResponse: ", txResponse);
+
+  // call 2nd transaction if it exists
+  const extendedTxData2 = await txs[1].tx();
+  const { from2, ...txData2 } = extendedTxData2;
+  const signer2 = provider.getSigner();
+  const txResponse2 = await signer.sendTransaction({
+    ...txData,
+    value: txData2.value ? BigNumber.from(txData2.value) : undefined
+  });
+
+
 };
