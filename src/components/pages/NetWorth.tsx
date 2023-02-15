@@ -4,26 +4,32 @@ import { launchTransak } from "../../utils/onRamp";
 import Pusher from "pusher-js";
 import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../../context/GlobalContext/GlobalContext";
+import { useAuth } from "@arcana/auth-react";
 
 const project = { name: "Net worth", amount: "240.57", href: "#", currency: "USD", bgColor: "bg-pink-600", icon: CurrencyDollarIcon };
 
 export default function Example() {
   const navigate = useNavigate();
   const { setTransakOrderData }: any = useGlobalContext();
+  const { user } = useAuth();
 
   const openTransak = (productsAvailed: string) => {
+    console.log(productsAvailed, "productsAvailed");
+
     const onRampParams = {
       apiKey: "69feba7f-a1c2-4cfa-a9bd-43072768b0e6",
       environment: "STAGING",
-      defaultCryptoCurrency: "DAI",
+      cryptoCurrencyCode: "USDC",
       fiatCurrency: "EUR",
-      walletAddress: "",
-      email: "",
+      fiatAmount: "44",
+      walletAddress: user?.address || "0xb21654C6A18D2d4446548a534b8E8e87BBEfA0EC",
+      email: user?.email || "sandeep.mallineni@gmail.com",
       network: "polygon",
-      productsAvailed
+      productsAvailed,
+      widgetHeight: "700px",
+      widgetWidth: "450px"
     };
     const transakWidget = launchTransak(onRampParams);
-    console.log(transakWidget, "transakWidget");
 
     if (transakWidget) {
       transakWidget.init();
@@ -33,7 +39,6 @@ export default function Example() {
 
         let pusher = new Pusher("1d9ffac87de599c61283", { cluster: "ap2" });
         let orderId = orderData.status.id;
-
         let channel = pusher.subscribe(orderId);
 
         channel.bind(`ORDER_COMPLETED`, (orderData: any) => {
