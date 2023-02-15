@@ -30,7 +30,7 @@ export default function Balance() {
                       Balance
                     </th>
                     <th scope="col" className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
-                      APY
+                      in USD
                     </th>
                     <th scope="col" className="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-6">
                       <span className="sr-only">Edit</span>
@@ -45,7 +45,7 @@ export default function Balance() {
                       <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-900">{transaction.apy}%</td>
                       <td className="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                         <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                          Withdraw<span className="sr-only"></span>
+                          Send<span className="sr-only"></span>
                         </a>
                       </td>
                     </tr>
