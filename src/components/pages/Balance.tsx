@@ -1,4 +1,10 @@
 import React from "react";
+// import { sendTransaction } from "../../utils/arcadaFunctions";
+
+// get the provider
+
+
+
 const transactions = [
   {
     symbol: "DAI",
@@ -12,7 +18,10 @@ const transactions = [
   }
 ];
 
-export default function Balance() {
+export default function Balance() {  
+   
+
+   
   return (
     <div>
       <h2 className="leading-6 text-xl font-semibold text-gray-900  lg:-mx-2">Balance</h2>
@@ -30,11 +39,11 @@ export default function Balance() {
                       Balance
                     </th>
                     <th scope="col" className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
-                      APY
+                      in USD
                     </th>
-                    <th scope="col" className="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-6">
+                    {/* <th scope="col" className="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-6">
                       <span className="sr-only">Edit</span>
-                    </th>
+                    </th> */}
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
@@ -43,11 +52,11 @@ export default function Balance() {
                       <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-6">{transaction.symbol}</td>
                       <td className="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">{transaction.balance}</td>
                       <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-900">{transaction.apy}%</td>
-                      <td className="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                          Withdraw<span className="sr-only"></span>
+                      {/* <td className="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                        <a href="#" onClick={()=>sendTransaction("")} className="text-indigo-600 hover:text-indigo-900">
+                          Send<span className="sr-only"></span>
                         </a>
-                      </td>
+                      </td> */}
                     </tr>
                   ))}
                 </tbody>
