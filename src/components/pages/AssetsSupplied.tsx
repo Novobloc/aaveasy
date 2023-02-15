@@ -10,7 +10,7 @@ export default function AssetsToSupply() {
 
   useEffect(() => {
     (async () => {
-      const data: any = await getAllBalances("0xb21654C6A18D2d4446548a534b8E8e87BBEfA0EC");
+      const data: any = await getAllBalances(user.address);
       setAssetList(data);
     })();
   }, []);

@@ -1,19 +1,27 @@
-import { Pool, EthereumTransactionTypeExtended } from "@aave/contract-helpers";
-import { BigNumber, providers } from "ethers";
+import { Pool, EthereumTransactionTypeExtended, ChainId } from "@aave/contract-helpers";
+import { BigNumber, providers, ethers } from "ethers";
+
+// Mumbai
+// LENDING_POOL: '0xEce3383269ccE0B2ae66277101996b58c482817B',
+// WETH_GATEWAY: '0x9BBA071d1f2A397Da82687e951bFC0407280E348',
+
+// Goerli
+// LENDING_POOL: "0x368EedF3f56ad10b9bC57eed4Dac65B26Bb667f6",
+// WETH_GATEWAY: "0xd5B55D3Ed89FDa19124ceB5baB620328287b915d",
 
 export const supply = async () => {
   // get metamask provider using ethers.js
-  const provider = new providers.Web3Provider(window.ethereum);
-
+  await window.ethereum.enable();
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
   const pool = new Pool(provider, {
-    POOL: "0x73D94B5D5C0a68Fe279a91b23D2165D2DAaA41d3",
-    WETH_GATEWAY: "0x2A498323aCaD2971a8b1936fD7540596dC9BBacD"
+    POOL: "0x368EedF3f56ad10b9bC57eed4Dac65B26Bb667f6"
+    // WETH_GATEWAY: "0xd5B55D3Ed89FDa19124ceB5baB620328287b915d"
   });
 
   const txs = await pool.supply({
-    user: "0xDFB93485205a9b0bC9E6e06F60882C8eb82aBcfe",
-    reserve: "0xCCB14936C2E000ED8393A571D15A2672537838Ad",
-    amount: "0.1"
+    user: "0x5B4d77e199FE8e5090009C72d2a5581C74FEbE89", // user wallet address
+    reserve: "0x07C725d58437504CA5f814AE406e70E21C5e8e9e", //underlying asset address
+    amount: "2"
   });
 
   console.log("txs : ", txs);
@@ -23,30 +31,26 @@ export const supply = async () => {
 
   // If there is no approval transaction, then supply() can called without the need for an approval or signature
 
-  submitTransaction(provider, txs);
+  await submitTransaction(provider, txs);
 };
 
-// Signing transactions requires a wallet provider, Aave UI currently uses web3-react (https://github.com/NoahZinsmeister/web3-react) for connecting wallets and accessing the wallet provider
-
 const submitTransaction = async (provider: any, txs: any) => {
-  const extendedTxData = await txs[0].tx();
-  const { from, ...txData } = extendedTxData;
-  const signer = provider.getSigner();
-  const txResponse = await signer.sendTransaction({
-    ...txData,
-    value: txData.value ? BigNumber.from(txData.value) : undefined
-  });
-
-  console.log("txResponse: ", txResponse);
-
-  // call 2nd transaction if it exists
-  const extendedTxData2 = await txs[1].tx();
-  const { from2, ...txData2 } = extendedTxData2;
-  const signer2 = provider.getSigner();
-  const txResponse2 = await signer.sendTransaction({
-    ...txData,
-    value: txData2.value ? BigNumber.from(txData2.value) : undefined
-  });
-
-
+  const responseArray: any = [];
+  if (txs.length > 0) {
+    for (let index = 0; index < txs.length; index++) {
+      console.log("Loop No: ", index);
+      const extendedTxData = await txs[index].tx();
+      const { from, ...txData } = extendedTxData;
+      const signer = provider.getSigner(from);
+      const txResponse = await signer.sendTransaction({
+        ...txData,
+        value: txData.value ? BigNumber.from(txData.value) : undefined,
+        gasLimit: 10000000
+      });
+      await txResponse.wait();
+      console.log("txResponse", txResponse);
+      responseArray.push(txResponse);
+    }
+  }
+  return responseArray;
 };
