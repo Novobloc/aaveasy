@@ -41,6 +41,10 @@ export default function MarketInfo() {
     supply(provider, user);
   };
 
+  const handleBorrow = async (asset: any) => {
+    borrow(provider, user);
+  };
+
   return (
     <>
       <section aria-labelledby="billing-history-heading">
@@ -105,7 +109,7 @@ export default function MarketInfo() {
                               </button>
                               &nbsp; &nbsp; &nbsp; &nbsp;
                               {asset.borrowingEnabled && (
-                                <button className="text-orange-600 hover:text-orange-900" onClick={borrow}>
+                                <button className="text-orange-600 hover:text-orange-900" onClick={handleBorrow}>
                                   Borrow
                                 </button>
                               )}

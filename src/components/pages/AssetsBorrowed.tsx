@@ -6,7 +6,7 @@ import { repay } from "../../utils/aaveFunctions";
 
 export default function AssetsToSupply() {
   const [assetList, setAssetList] = useState([]);
-  const { user }: any = useAuth();
+  const { user, provider }: any = useAuth();
 
   useEffect(() => {
     (async () => {
@@ -14,6 +14,10 @@ export default function AssetsToSupply() {
       setAssetList(data);
     })();
   }, [user?.address]);
+
+  const handleRepay = async (asset: any) => {
+    repay(provider, user);
+  };
 
   return (
     <>
@@ -57,7 +61,7 @@ export default function AssetsToSupply() {
                             <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.amount}</td>
                             <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.amount} %</td>
                             <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                              <button className="text-orange-600 hover:text-orange-900" onClick={repay}>
+                              <button className="text-orange-600 hover:text-orange-900" onClick={handleRepay}>
                                 Repay
                               </button>
                             </td>
