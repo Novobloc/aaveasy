@@ -28,7 +28,7 @@ const initialAssetList = [
 
 export default function MarketInfo() {
   const [assetList, setAssetList] = useState(initialAssetList);
-  const { loading, isLoggedIn, provider } = useAuth();
+  const { user, provider } = useAuth();
 
   useEffect(() => {
     (async () => {
@@ -38,7 +38,7 @@ export default function MarketInfo() {
   }, []);
 
   const handleSupply = async (asset: any) => {
-    supply(provider);
+    supply(provider, user);
   };
 
   return (

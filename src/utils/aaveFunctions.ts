@@ -16,7 +16,7 @@ const GOERLI_USDC_ADDRESS = "0xA2025B15a1757311bfD68cb14eaeFCc237AF5b43";
 // LENDING_POOL: "0x368EedF3f56ad10b9bC57eed4Dac65B26Bb667f6",
 // WETH_GATEWAY: "0xd5B55D3Ed89FDa19124ceB5baB620328287b915d",
 
-export const supply = async (arcanaProvider: any) => {
+export const supply = async (arcanaProvider: any, user: any) => {
   arcanaProvider.request({ method: "eth_accounts" }).then((accounts: any) => {
     console.log("accounts: ", accounts);
   });
@@ -30,7 +30,7 @@ export const supply = async (arcanaProvider: any) => {
   console.log("pool: ", pool);
 
   const txs = await pool.supply({
-    user: "0x5B4d77e199FE8e5090009C72d2a5581C74FEbE89", // user wallet address
+    user: user.address, // "0xb21654C6A18D2d4446548a534b8E8e87BBEfA0EC", // user wallet address
     reserve: "0x07C725d58437504CA5f814AE406e70E21C5e8e9e", //underlying asset address
     amount: "0.12"
   });
@@ -38,7 +38,7 @@ export const supply = async (arcanaProvider: any) => {
   console.log("txs : ", txs);
 
   await sendTransaction(arcanaProvider, txs);
-}
+};
 
 const submitTransaction = async (provider: any, txs: any) => {
   const responseArray: any = [];
