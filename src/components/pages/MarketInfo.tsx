@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { aaveMarketInfo } from "../../utils/functions";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/20/solid";
-import  { supply } from "../../utils/aaveFunctions";
+import { supply } from "../../utils/aaveFunctions";
+import { useAuth } from "@arcana/auth-react";
 
 const initialAssetList = [
   {
@@ -27,6 +28,7 @@ const initialAssetList = [
 
 export default function MarketInfo() {
   const [assetList, setAssetList] = useState(initialAssetList);
+  const { loading, isLoggedIn, provider } = useAuth();
 
   useEffect(() => {
     (async () => {
@@ -34,6 +36,10 @@ export default function MarketInfo() {
       setAssetList(data);
     })();
   }, []);
+
+  const handleSupply = async (asset: any) => {
+    supply(provider);
+  };
 
   return (
     <>
@@ -94,7 +100,7 @@ export default function MarketInfo() {
                                 Buy / Sell
                               </a>
                               &nbsp; &nbsp; &nbsp; &nbsp;
-                              <a href={asset.explorerLink} className="text-orange-600 hover:text-orange-900" onClick={supply}>
+                              <a href={asset.explorerLink} className="text-orange-600 hover:text-orange-900" onClick={handleSupply}>
                                 Supply
                               </a>
                               &nbsp; &nbsp; &nbsp; &nbsp;

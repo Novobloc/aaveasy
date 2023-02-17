@@ -24,6 +24,8 @@ const Index = () => {
   // const { appLoading } = useGlobalContext();
   // console.log("appLoading: ", appLoading);
 
+ 
+
   return (
     <React.StrictMode>
       <ProvideAuth provider={provider}>
