@@ -48,23 +48,25 @@ export default function AssetsToSupply() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200 bg-white">
-                      {assetList.map((asset: any) => (
-                        <tr key={asset.contractAddress}>
-                          <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.meta.symbol}</td>
-                          <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.amount}</td>
-                          <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.amount} %</td>
-                          <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                            <a href={asset.explorerLink} className="text-orange-600 hover:text-orange-900">
-                              Repay
-                            </a>
-                          </td>
-                          <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
-                            <a href={asset.meta.viewURL} className="text-orange-600 hover:text-orange-900">
-                              <ArrowRightIcon />
-                            </a>
-                          </td>
-                        </tr>
-                      ))}
+                      {assetList &&
+                        assetList.length > 0 &&
+                        assetList.map((asset: any) => (
+                          <tr key={asset.contractAddress}>
+                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.meta.symbol}</td>
+                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.amount}</td>
+                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.amount} %</td>
+                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                              <a href={asset.explorerLink} className="text-orange-600 hover:text-orange-900">
+                                Repay
+                              </a>
+                            </td>
+                            <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
+                              <a href={asset.meta.viewURL} className="text-orange-600 hover:text-orange-900">
+                                <ArrowRightIcon />
+                              </a>
+                            </td>
+                          </tr>
+                        ))}
                     </tbody>
                   </table>
                 </div>
