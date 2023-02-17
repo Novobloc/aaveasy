@@ -5,15 +5,14 @@ import { ArrowRightIcon } from "@heroicons/react/20/solid";
 
 export default function AssetsToSupply() {
   const [assetList, setAssetList] = useState([]);
-  const auth = useAuth();
-  const user: any = auth.user;
+  const { user }: any = useAuth();
 
   useEffect(() => {
     (async () => {
-      const data: any = await getAllBalances(user.address);
+      const data: any = await getAllBalances(user?.address);
       setAssetList(data);
     })();
-  }, []);
+  }, [user?.address]);
 
   return (
     <>

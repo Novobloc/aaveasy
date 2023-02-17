@@ -10,10 +10,10 @@ export default function Portfolio() {
 
   useEffect(() => {
     (async () => {
-      const data: any = await getAllBalances(user.address);
+      const data: any = await getAllBalances(user?.address);
       setAssetList(data);
     })();
-  }, []);
+  }, [user?.address]);
 
   return (
     <>
