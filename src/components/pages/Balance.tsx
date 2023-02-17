@@ -1,27 +1,22 @@
-import React from "react";
-// import { sendTransaction } from "../../utils/arcadaFunctions";
+import React, { useEffect, useState } from "react";
+import { getUserBalance } from "../../utils/graph";
+import { useAuth } from "@arcana/auth-react";
+import { ArrowTopRightOnSquareIcon } from "@heroicons/react/20/solid";
 
-// get the provider
+export default function Balance() {
+  const { user }: any = useAuth();
+  const [userBalance, setUserBalance] = useState([]);
 
+  useEffect(() => {
+    (async () => {
+      console.log(user?.address, "user?.address");
+      const balanceData = await getUserBalance("0x5b4d77e199fe8e5090009c72d2a5581c74febe89");
+      const balance = balanceData?.users[0].reserves;
+      console.log(balance, "balance");
+      setUserBalance(balance);
+    })();
+  }, [user?.address]);
 
-
-const transactions = [
-  {
-    symbol: "DAI",
-    balance: 23.48,
-    apy: 1.23
-  },
-  {
-    symbol: "MATIC",
-    balance: 2.8,
-    apy: 0.3
-  }
-];
-
-export default function Balance() {  
-   
-
-   
   return (
     <div>
       <h2 className="leading-6 text-xl font-semibold text-gray-900  lg:-mx-2">Balance</h2>
@@ -39,26 +34,25 @@ export default function Balance() {
                       Balance
                     </th>
                     <th scope="col" className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
-                      in USD
+                      View
                     </th>
-                    {/* <th scope="col" className="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-6">
-                      <span className="sr-only">Edit</span>
-                    </th> */}
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
-                  {transactions.map((transaction) => (
-                    <tr key={transaction.symbol}>
-                      <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-6">{transaction.symbol}</td>
-                      <td className="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">{transaction.balance}</td>
-                      <td className="whitespace-nowrap px-2 py-2 text-sm text-gray-900">{transaction.apy}%</td>
-                      {/* <td className="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                        <a href="#" onClick={()=>sendTransaction("")} className="text-indigo-600 hover:text-indigo-900">
-                          Send<span className="sr-only"></span>
-                        </a>
-                      </td> */}
-                    </tr>
-                  ))}
+                  {userBalance &&
+                    userBalance.map((transaction: any) => (
+                      <tr key={transaction.symbol}>
+                        <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-6">{transaction.reserve.symbol}</td>
+                        <td className="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
+                          {(Number(transaction.currentATokenBalance) / Math.pow(10, transaction.reserve.decimals)).toFixed(1)}
+                        </td>
+                        <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
+                          <a href={`https://goerli.etherscan.io/address/${transaction.reserve.underlyingAsset}`} target="_blank" rel="noreferrer">
+                            <ArrowTopRightOnSquareIcon width={15} />
+                          </a>
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </div>
