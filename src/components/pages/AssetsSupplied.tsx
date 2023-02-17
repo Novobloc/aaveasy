@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getAllBalances } from "../../utils/functions";
 import { useAuth } from "@arcana/auth-react";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { withdraw } from "../../utils/aaveFunctions";
+import { getOnlyUserReserves } from "../../utils/graph";
 
 export default function AssetsToSupply() {
   const [assetList, setAssetList] = useState([]);
@@ -10,8 +10,9 @@ export default function AssetsToSupply() {
 
   useEffect(() => {
     (async () => {
-      const data: any = await getAllBalances(user?.address);
-      setAssetList(data);
+      const supplyData = await getOnlyUserReserves("0x5b4d77e199fe8e5090009c72d2a5581c74febe89");
+      const supplyHistory = supplyData.user.reserves;
+      setAssetList(supplyHistory);
     })();
   }, [user?.address]);
 
@@ -57,16 +58,25 @@ export default function AssetsToSupply() {
                         assetList.length > 0 &&
                         assetList.map((asset: any) => (
                           <tr key={asset.contractAddress}>
-                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.meta.symbol}</td>
-                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.amount}</td>
-                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.amount} %</td>
+                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.reserve.symbol}</td>
+                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                              {" "}
+                              {(asset.currentATokenBalance / Math.pow(10, asset.reserve.decimals)).toFixed(2)}
+                            </td>
+                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                              {" "}
+                              {((asset.currentATokenBalance / Math.pow(10, asset.reserve.decimals)) * asset.supplyHistory[0].assetPriceUSD).toFixed(
+                                2
+                              )}{" "}
+                              $
+                            </td>
                             <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                               <button className="text-orange-600 hover:text-orange-900" onClick={handleWithDraw}>
                                 Withdraw
                               </button>
                             </td>
                             <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
-                              <a href={asset.meta.viewURL} className="text-orange-600 hover:text-orange-900">
+                              <a className="text-orange-600 hover:text-orange-900">
                                 <ArrowRightIcon />
                               </a>
                             </td>
