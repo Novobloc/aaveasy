@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Loader from "./layouts/Loader";
 import Home from "./components/Home";
 import AaveApp from "./components/AaveApp";
+import UserAllBalances from "./components/pages/UserAllBalances";
 
 /** Layout */
 import Header from "./layouts/Header";
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/app" element={<AaveApp />} />
+          <Route path="/user/balances" element={<UserAllBalances />} />
         </Routes>
       </Router>
     </div>

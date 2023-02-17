@@ -1,49 +1,43 @@
 import React, { useEffect, useState } from "react";
-import { getUserReserves } from "../../utils/graph";
+import { ArrowTopRightOnSquareIcon } from "@heroicons/react/20/solid";
 import { useAuth } from "@arcana/auth-react";
-import { ArrowTopRightOnSquareIcon, CheckIcon, ArrowRightIcon } from "@heroicons/react/20/solid";
 import { getAllBalances } from "../../utils/functions";
-import { Link, useNavigate } from "react-router-dom";
 
-export default function Balance() {
+export default function UserAllBalances() {
   const { user }: any = useAuth();
   const [userBalance, setUserBalance] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
       console.log(user?.address, "user?.address");
       const balanceData: any = await getAllBalances("0x5B4d77e199FE8e5090009C72d2a5581C74FEbE89");
-      console.log(balanceData, "balance");
       setUserBalance(balanceData);
     })();
   }, [user?.address]);
 
-  const goToBalances = () => {
-    return navigate("/user/balances");
-  };
-
   return (
-    <div>
-      <div>
-        <h2 className="leading-6 text-xl font-semibold text-gray-900  lg:-mx-2">Balance</h2>
-        <div className="bg-gray-50 px-4 text-right sm:px-6 -my-4">
-          <button type="submit" className="inline-flex text-orange-600 hover:text-orange-900" onClick={goToBalances}>
-            {" "}
-            View All
-            <ArrowRightIcon className="h-5 w-5 ml-2" aria-hidden="true" />
-          </button>
+    <>
+      <div className="px-6 lg:px-8">
+        <div className="sm:flex sm:items-center">
+          <div className="sm:flex-auto">
+            <h1 className="text-xl font-semibold text-gray-900">All Tokens</h1>
+            {/* <p className="mt-2 text-sm text-gray-700">A table of placeholder stock market data that does not make any sense.</p> */}
+          </div>
+          <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+            <button
+              type="button"
+              className="block rounded-md bg-indigo-600 py-1.5 px-3 text-center text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+              Export
+            </button>
+          </div>
         </div>
-      </div>
-
-      <div className="mt-4 flex flex-col">
-        <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="inline-block min-w-full align-middle ">
-            <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+        <div className="mt-8 flow-root">
+          <div className="-my-2 -mx-6 overflow-x-auto lg:-mx-8">
+            <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
               <table className="min-w-full divide-y divide-gray-300">
-                <thead className="bg-gray-50">
+                <thead>
                   <tr>
-                    <th scope="col" className="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+                    <th scope="col" className="whitespace-nowrap py-3.5 pl-6 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
                       Symbol
                     </th>
                     <th scope="col" className="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
@@ -57,9 +51,9 @@ export default function Balance() {
                 <tbody className="divide-y divide-gray-200 bg-white">
                   {userBalance &&
                     userBalance.length > 0 &&
-                    userBalance.slice(0, 2).map((transaction: any, i) => (
-                      <tr key={i}>
-                        <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-6">{transaction?.meta?.symbol || ""}</td>
+                    userBalance.map((transaction: any, i) => (
+                      <tr key={transaction.id}>
+                        <td className="whitespace-nowrap py-2 pl-6 pr-3 text-sm text-gray-500 sm:pl-0">{transaction?.meta?.symbol || ""}</td>
                         <td className="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">{transaction.amount || ""}</td>
                         <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
                           <a href={transaction.meta.viewURL || ""} target="_blank" rel="noreferrer">
@@ -74,6 +68,6 @@ export default function Balance() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

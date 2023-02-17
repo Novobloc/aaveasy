@@ -15,6 +15,7 @@ export const fetchUserTransactionsQuery = (address: string) => {
             reserve {
               symbol
               decimals
+              underlyingAsset
             }
             assetPriceUSD
           }
@@ -36,6 +37,7 @@ export const fetchUserTransactionsQuery = (address: string) => {
             reserve {
               symbol
               decimals
+              underlyingAsset
             }
             assetPriceUSD
           }
@@ -115,5 +117,38 @@ export const fetchUserQuery = (address: string) => {
       }
     }
   }`;
+  return query;
+};
+
+export const fetchBorrowsQuery = (address: string) => {
+  const query = `
+  {
+    borrows(where: {user: ${JSON.stringify(address)}}) {
+      amount
+      action
+      assetPriceUSD
+      borrowRate
+      borrowRateMode
+      id
+      stableTokenDebt
+      timestamp
+      txHash
+      variableTokenDebt
+      reserve {
+        decimals
+        name
+        symbol
+        id
+        availableLiquidity
+        aToken {
+          id
+          underlyingAssetAddress
+          underlyingAssetDecimals
+     
+        }
+      }
+    }
+  }
+  `;
   return query;
 };
