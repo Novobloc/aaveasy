@@ -2,34 +2,36 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { BigNumber, ethers } from "ethers";
 
 export const getAllBalances = async (walletAddress: string) => {
-  const data = JSON.stringify({
-    jsonrpc: "2.0",
-    method: "alchemy_getTokenBalances",
-    params: [walletAddress],
-    id: "1"
-  });
+  if (walletAddress) {
+    const data = JSON.stringify({
+      jsonrpc: "2.0",
+      method: "alchemy_getTokenBalances",
+      params: [walletAddress],
+      id: "1"
+    });
 
-  const config: AxiosRequestConfig = {
-    method: "post",
-    url: "https://polygon-mumbai.g.alchemy.com/v2/3jhc6GGw5LCvFa4HR12QFXoynv9THywA",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    data: data
-  };
+    const config: AxiosRequestConfig = {
+      method: "post",
+      url: "https://polygon-mumbai.g.alchemy.com/v2/3jhc6GGw5LCvFa4HR12QFXoynv9THywA",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      data: data
+    };
 
-  const response: AxiosResponse = await axios(config);
-  const tokenBalances = response.data.result.tokenBalances;
-  const promises = await tokenBalances.map(async (item: any) => {
-    const val = await getTokenMetaData(item.contractAddress);
-    const amount = item.tokenBalance / Math.pow(10, val.decimals);
-    item.meta = val;
-    item.amount = amount;
-    item.meta.viewURL = `https://mumbai.polygonscan.com/address/${walletAddress}#tokentxns`;
-    return item;
-  });
-  const tokenBalancesNew = await Promise.all(promises);
-  return tokenBalancesNew;
+    const response: AxiosResponse = await axios(config);
+    const tokenBalances = response.data.result.tokenBalances;
+    const promises = await tokenBalances.map(async (item: any) => {
+      const val = await getTokenMetaData(item.contractAddress);
+      const amount = item.tokenBalance / Math.pow(10, val.decimals);
+      item.meta = val;
+      item.amount = amount;
+      item.meta.viewURL = `https://mumbai.polygonscan.com/address/${walletAddress}#tokentxns`;
+      return item;
+    });
+    const tokenBalancesNew = await Promise.all(promises);
+    return tokenBalancesNew;
+  }
 };
 
 export const getTokenMetaData = async (tokenAddress: string) => {

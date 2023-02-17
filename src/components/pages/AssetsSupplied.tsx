@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getAllBalances } from "../../utils/functions";
 import { useAuth } from "@arcana/auth-react";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
+import { withdraw } from "../../utils/aaveFunctions";
 
 export default function AssetsToSupply() {
   const [assetList, setAssetList] = useState([]);
@@ -48,23 +49,25 @@ export default function AssetsToSupply() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200 bg-white">
-                      {assetList.map((asset: any) => (
-                        <tr key={asset.contractAddress}>
-                          <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.meta.symbol}</td>
-                          <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.amount}</td>
-                          <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.amount} %</td>
-                          <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                            <a href={asset.explorerLink} className="text-orange-600 hover:text-orange-900">
-                              Withdraw
-                            </a>
-                          </td>
-                          <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
-                            <a href={asset.meta.viewURL} className="text-orange-600 hover:text-orange-900">
-                              <ArrowRightIcon />
-                            </a>
-                          </td>
-                        </tr>
-                      ))}
+                      {assetList &&
+                        assetList.length > 0 &&
+                        assetList.map((asset: any) => (
+                          <tr key={asset.contractAddress}>
+                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.meta.symbol}</td>
+                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.amount}</td>
+                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.amount} %</td>
+                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                              <button className="text-orange-600 hover:text-orange-900" onClick={withdraw}>
+                                Withdraw
+                              </button>
+                            </td>
+                            <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
+                              <a href={asset.meta.viewURL} className="text-orange-600 hover:text-orange-900">
+                                <ArrowRightIcon />
+                              </a>
+                            </td>
+                          </tr>
+                        ))}
                     </tbody>
                   </table>
                 </div>

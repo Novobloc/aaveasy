@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { aaveMarketInfo } from "../../utils/functions";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/20/solid";
-import { supply } from "../../utils/aaveFunctions";
 import { useAuth } from "@arcana/auth-react";
+import { supply, borrow } from "../../utils/aaveFunctions";
 
 const initialAssetList = [
   {
@@ -100,14 +100,14 @@ export default function MarketInfo() {
                                 Buy / Sell
                               </a>
                               &nbsp; &nbsp; &nbsp; &nbsp;
-                              <a href={asset.explorerLink} className="text-orange-600 hover:text-orange-900" onClick={handleSupply}>
+                              <button className="text-orange-600 hover:text-orange-900" onClick={handleSupply}>
                                 Supply
-                              </a>
+                              </button>
                               &nbsp; &nbsp; &nbsp; &nbsp;
                               {asset.borrowingEnabled && (
-                                <a href={asset.explorerLink} className="text-orange-600 hover:text-orange-900">
+                                <button className="text-orange-600 hover:text-orange-900" onClick={borrow}>
                                   Borrow
-                                </a>
+                                </button>
                               )}
                             </td>
                             <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
