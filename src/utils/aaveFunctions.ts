@@ -39,7 +39,9 @@ export const supply = async (arcanaProvider: any, user: any, asset: any) => {
 
 export const withdraw = async (arcanaProvider: any, user: any, asset: any) => {
   const pool = getPool(arcanaProvider);
-  const withdrawalAmount = (asset.currentATokenBalance / Math.pow(10, asset.reserve.decimals)).toString() || "1";
+  const withdrawalAmount = (asset.currentATokenBalance / Math.pow(10, asset.reserve.decimals)).toFixed(0).toString() || "1";
+  console.log(withdrawalAmount, "withdrawalAmount");
+
   const txs = await pool.withdraw({
     user: user?.address, // user wallet address
     reserve: asset.reserve.underlyingAsset, //underlying asset address
@@ -73,11 +75,15 @@ export const borrow = async (arcanaProvider: any, user: any, asset: any) => {
 };
 
 export const repay = async (arcanaProvider: any, user: any, asset: any) => {
+  console.log(asset);
+  const repayAmount = Math.round(asset.currentStableDebt / Math.pow(10, asset.reserve.decimals)).toString() || "1";
+  console.log(repayAmount, "rep");
+
   const pool = getPool(arcanaProvider);
   const txs = await pool.repay({
     user: user.address, // "0xb21654C6A18D2d4446548a534b8E8e87BBEfA0EC", // user wallet address
-    reserve: asset.userReserve.reserve.underlyingAsset, //underlying asset address
-    amount: asset.currentStableDebt || "1",
+    reserve: asset.reserve.underlyingAsset, //underlying asset address
+    amount: repayAmount || "1",
     interestRateMode: InterestRate.Stable,
     onBehalfOf: user.address
   });
