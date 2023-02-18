@@ -117,3 +117,38 @@ export const fetchUserQuery = (address: string) => {
   }`;
   return query;
 };
+
+
+// fetch all reserves
+export const fetchReservesQuery = () => {
+  const query = `{
+    reserves {
+      id
+      symbol
+      name
+      decimals
+      underlyingAsset
+      usageAsCollateralEnabled
+      reserveFactor
+      baseLTVasCollateral
+      averageStableRate
+      stableDebtLastUpdateTimestamp
+      liquidityIndex
+      reserveLiquidationThreshold
+      reserveLiquidationBonus
+      variableBorrowIndex
+      variableBorrowRate
+      liquidityRate
+      totalPrincipalStableDebt
+      totalScaledVariableDebt
+      lastUpdateTimestamp
+      availableLiquidity
+      stableBorrowRate
+      totalLiquidity
+      price {
+        priceInEth
+      }
+    }
+  }`;
+  return query;
+}

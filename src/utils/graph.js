@@ -1,5 +1,5 @@
 import { createClient } from "urql";
-import { fetchUserTransactionsQuery, fetchUserReservesQuery, fetchUserQuery } from "./graphQueries";
+import { fetchUserTransactionsQuery, fetchUserReservesQuery, fetchUserQuery, fetchReservesQuery } from "./graphQueries";
 
 const config = {
   GRAPH_PROTOCOL: {
@@ -36,3 +36,17 @@ export const getUserBalance = async (address) => {
   const response = await client.query(query).toPromise();
   return response.data;
 };
+
+// get all reverves
+export const getAllReserves = async () => {
+
+  const query = fetchReservesQuery();
+  const client = createClient({
+    url: API_URL
+  });
+  const response = await client.query(query).toPromise();
+  return response.data;
+
+
+}
+
