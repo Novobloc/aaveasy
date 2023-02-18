@@ -50,25 +50,19 @@ export default function Header() {
       <div className="container flex flex-col flex-wrap items-center justify-between py-5 mx-auto md:flex-row max-w-7xl">
         <div className="relative flex flex-col md:flex-row">
           <Link to="/" className="flex items-center mb-5 font-medium text-gray-900 lg:w-auto lg:items-center lg:justify-center md:mb-0">
-            <span className="mx-auto ml-0 text-xl  leading-none text-transparent bg-clip-text bg-gradient-to-r from-aave-500  to-aave-800 select-none">
+            <button className="flex items-center justify-center w-8 h-8 mr-3 text-white bg-gradient-to-r from-cyan-500  to-fuchsia-500 rounded-full border-slate-400 focus:outline-none"></button>
+            <span className="mx-auto ml-0 text-xl tracking-widest uppercase  leading-none text-transparent font-thin  text-slate-900 select-none">
               Aaveasy
             </span>
           </Link>
-          <nav className="flex flex-wrap items-center mb-5 text-base md:mb-0 md:pl-8 md:ml-8 md:border-l md:border-gray-200">
-            {paths &&
-              paths.map(({ path, name }) => (
-                <Link key={path + name} to={path} className="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900">
-                  {name}
-                </Link>
-              ))}
-          </nav>
+         
         </div>
         <div className="inline-flex items-center ml-1 space-x-5 lg:justify-end">
           {!account && (
             <button
               disabled={false}
               onClick={connectWallet}
-              className="flex w-32 justify-center rounded-md border border-transparent bg-gray-900 py-1 px-0 text-base font-medium text-white shadow hover:bg-black focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-rose-500">
+              className="flex w-44 justify-center font-extralight bg-gradient-to-r from-cyan-500 via-blue-400  to-fuchsia-500   rounded-md  border border-transparent bg-gray-900 py-1 px-0 text-base text-white shadow hover:bg-black focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-1 focus:ring-offset-slate-500">
               Connect Wallet
             </button>
           )}
