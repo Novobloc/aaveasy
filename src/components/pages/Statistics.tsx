@@ -24,7 +24,7 @@ export default function Example() {
 
         {/* Right column */}
 
-        <div className="grid grid-cols-1 gap-4 lg:col-span-2">
+        <div className="grid grid-cols-1 gap-4 lg:col-span-2 ">
           <section aria-labelledby="section-1-title">
             <div className="overflow-hidden rounded-lg bg-white shadow">
               <div className="p-6">

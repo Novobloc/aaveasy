@@ -4,6 +4,7 @@ import { ArrowTopRightOnSquareIcon } from "@heroicons/react/20/solid";
 import { useAuth } from "@arcana/auth-react";
 import { supply, borrow } from "../../utils/aaveFunctions";
 import { getAllReserves } from "../../utils/graph";
+import { ArrowPathIcon } from "@heroicons/react/20/solid";
 
 export default function MarketInfo() {
   const [assetList, setAssetList] = useState([]);
@@ -25,14 +26,26 @@ export default function MarketInfo() {
     borrow(provider, user);
   };
 
+  const randColor = () => {
+    return (
+      "#" +
+      Math.floor(Math.random() * 16777215)
+        .toString(16)
+        .padStart(6, "0")
+        .toUpperCase()
+    );
+  };
+
   return (
     <>
       <section aria-labelledby="billing-history-heading">
         <div className="bg-white pt-6 shadow sm:overflow-hidden sm:rounded-md">
-          <div className="px-4 sm:px-6">
+          <div className="flex px-4 sm:px-6">
             <h2 id="billing-history-heading" className="leading-6 text-xl font-semibold text-gray-900">
               Market Info
             </h2>
+
+            <ArrowPathIcon className="h-6 w-6 ml-2 text-orange-500" />
           </div>
           <div className="mt-6 flex flex-col">
             <div className="-my-2  sm:-mx-6 lg:-mx-8">
@@ -69,7 +82,8 @@ export default function MarketInfo() {
                             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
                               <div className="flex items-center">
                                 <div className="h-10 w-10 flex-shrink-0">
-                                  <img className="h-10 w-10 rounded-full" src={asset.logo} alt="" />
+                                  <button className="h-10 w-10 rounded-full bg-gradient-to-r from-blue-200   to-fuchsia-200"></button>
+                                  {/* <img className="h-10 w-10 rounded-full" src={asset.logo} alt="" /> */}
                                 </div>
                                 <div className="ml-4">
                                   <div className="font-medium text-gray-900">{asset.symbol}</div>
