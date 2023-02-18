@@ -13,7 +13,7 @@ export default function Balance() {
   useEffect(() => {
     (async () => {
       console.log(user?.address, "user?.address");
-      const balanceData: any = await getAllBalances("0x5B4d77e199FE8e5090009C72d2a5581C74FEbE89");
+      const balanceData: any = await getAllBalances(user?.address);
       setUserBalance(balanceData);
     })();
   }, [user?.address]);
@@ -67,6 +67,9 @@ export default function Balance() {
                         </td>
                       </tr>
                     ))}
+                  {userBalance.length === 0 && (
+                    <tr className="whitespace-nowrap px-6 py-4 text-sm text-gray-500 text-center w-full ">No Records Found</tr>
+                  )}
                 </tbody>
               </table>
             </div>

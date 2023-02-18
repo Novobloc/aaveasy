@@ -41,11 +41,11 @@ export const withdraw = async (arcanaProvider: any, user: any) => {
   const pool = getPool(arcanaProvider);
 
   const txs = await pool.withdraw({
-    user: "0x5B4d77e199FE8e5090009C72d2a5581C74FEbE89", // user wallet address
+    user: user?.address, // user wallet address
     reserve: GOERLI_LINK_ADDRESS, //underlying asset address
     amount: "2",
     aTokenAddress: "0x6A639d29454287B3cBB632Aa9f93bfB89E3fd18f", //aLINK
-    onBehalfOf: "0x5B4d77e199FE8e5090009C72d2a5581C74FEbE89"
+    onBehalfOf: user?.address
   });
 
   await sendTransaction(arcanaProvider, txs);

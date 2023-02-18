@@ -10,8 +10,8 @@ export default function AssetsToSupply() {
 
   useEffect(() => {
     (async () => {
-      const supplyData = await getOnlyUserReserves("0x5b4d77e199fe8e5090009c72d2a5581c74febe89");
-      const supplyHistory = supplyData.user.reserves;
+      const supplyData = await getOnlyUserReserves(user?.address);
+      const supplyHistory = supplyData?.user?.reserves || [];
       setAssetList(supplyHistory);
     })();
   }, [user?.address]);
@@ -82,6 +82,10 @@ export default function AssetsToSupply() {
                             </td>
                           </tr>
                         ))}
+
+                      {assetList.length === 0 && (
+                        <tr className="whitespace-nowrap px-6 py-4 text-sm text-gray-500 text-center w-full ">No Records Found</tr>
+                      )}
                     </tbody>
                   </table>
                 </div>
