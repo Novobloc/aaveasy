@@ -31,6 +31,10 @@ Github : <a style="margin-bottom: 5px;" href="https://github.com/Novobloc/aaveas
 
 Video : <a style="margin-bottom: 5px;" href="" target="_blank"> Youtube Link </a>
 
+## App Flow
+
+![Aaveasy](images/appflow.png)
+
 
 
 
