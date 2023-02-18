@@ -10,14 +10,21 @@ export default function AssetsToSupply() {
 
   useEffect(() => {
     (async () => {
-      const supplyData = await getOnlyUserReserves(user?.address);
-      const supplyHistory = supplyData?.user?.reserves || [];
-      setAssetList(supplyHistory);
+      await fetchAssets();
     })();
   }, [user?.address]);
 
+  const fetchAssets = async () => {
+    const supplyData = await getOnlyUserReserves(user?.address.toLowerCase());
+    const supplyHistory = supplyData?.user?.reserves || [];
+    setAssetList(supplyHistory);
+  };
+
   const handleWithDraw = async (asset: any) => {
-    withdraw(provider, user);
+    const resp = await withdraw(provider, user, asset);
+    if (resp && resp.hash) {
+      await fetchAssets();
+    }
   };
 
   return (
@@ -43,7 +50,7 @@ export default function AssetsToSupply() {
                           Balance
                         </th>
                         <th scope="col" className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
-                          APY
+                          Price
                         </th>
                         <th scope="col" className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
                           Action
@@ -65,13 +72,13 @@ export default function AssetsToSupply() {
                             </td>
                             <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                               {" "}
-                              {((asset.currentATokenBalance / Math.pow(10, asset.reserve.decimals)) * asset.supplyHistory[0].assetPriceUSD).toFixed(
+                              {((asset.currentATokenBalance / Math.pow(10, asset.reserve.decimals)) * asset?.supplyHistory[0]?.assetPriceUSD).toFixed(
                                 2
                               )}{" "}
                               $
                             </td>
                             <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                              <button className="text-orange-600 hover:text-orange-900" onClick={handleWithDraw}>
+                              <button className="text-orange-600 hover:text-orange-900" onClick={() => handleWithDraw(asset)}>
                                 Withdraw
                               </button>
                             </td>

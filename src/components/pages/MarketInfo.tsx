@@ -11,18 +11,28 @@ export default function MarketInfo() {
 
   useEffect(() => {
     (async () => {
-      const reserveData = await getAllReserves();
-      const reserves = reserveData.reserves;
-      setAssetList(reserves);
+      await fetchReserves();
     })();
   }, []);
 
+  const fetchReserves = async () => {
+    const reserveData = await getAllReserves();
+    const reserves = reserveData.reserves;
+    setAssetList(reserves);
+  };
+
   const handleSupply = async (asset: any) => {
-    supply(provider, user);
+    const resp: any = await supply(provider, user, asset);
+    if (resp && resp.hash) {
+      await fetchReserves();
+    }
   };
 
   const handleBorrow = async (asset: any) => {
-    borrow(provider, user);
+    const resp = await borrow(provider, user, asset);
+    if (resp && resp.hash) {
+      await fetchReserves();
+    }
   };
 
   return (
@@ -84,12 +94,12 @@ export default function MarketInfo() {
                                 Buy / Sell
                               </a>
                               &nbsp; &nbsp; &nbsp; &nbsp;
-                              <button className="text-orange-600 hover:text-orange-900" onClick={handleSupply}>
+                              <button className="text-orange-600 hover:text-orange-900" onClick={() => handleSupply(asset)}>
                                 Supply
                               </button>
                               &nbsp; &nbsp; &nbsp; &nbsp;
                               {asset.borrowingEnabled && (
-                                <button className="text-orange-600 hover:text-orange-900" onClick={handleBorrow}>
+                                <button className="text-orange-600 hover:text-orange-900" onClick={() => handleBorrow(asset)}>
                                   Borrow
                                 </button>
                               )}
