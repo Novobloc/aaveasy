@@ -1,13 +1,25 @@
+<br>
+
+![Aaveasy](images/aaveasy.png)
 # AAVEASY
 ## Get the most out of the Aave protocol
 
-![alt text](images/aaveasy.png)
+
+**Aaveasy** is a platform that allows users to easily interact with the **Aave** protocol. It allows users to deposit and withdraw their assets, borrow and repay their loans, and also allows users to login using their social media accounts powered by **arcana**.
+
+
 
 
 
 <br>
- 
+
 ## Demo
+
+### Home Page
+
+![Home](images/home.png)
+ 
+
 
 <br>
 Insert gif here
@@ -21,7 +33,6 @@ Video : <a style="margin-bottom: 5px;" href="" target="_blank"> Youtube Link </a
 
 
 
-**Aaveasy** is a platform that allows users to easily interact with the **Aave** protocol. It allows users to deposit and withdraw their assets, borrow and repay their loans, and also allows users to login using their social media accounts powered by **arcana**.
 
 ## Stack We Used
 ![alt text](images/stack.png)
