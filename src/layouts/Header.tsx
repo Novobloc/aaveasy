@@ -101,7 +101,7 @@ export default function Header() {
                     <Menu.Item>
                       {({ active }) => (
                         <a
-                          href={`https://mumbai.polygonscan.com/address/${account.address}`}
+                          href={`https://goerli.etherscan.io/address/${account.address}`}
                           target="_blank"
                           rel="noreferrer"
                           className={classNames(active ? "bg-gray-100" : "", "px-4 py-2 text-sm text-gray-700 flex")}>
