@@ -10,14 +10,23 @@ export default function AssetsToSupply() {
 
   useEffect(() => {
     (async () => {
-      const borrowData = await getUserBorrows(user?.address); //0x5b4d77e199fe8e5090009c72d2a5581c74febe89
+      const borrowData = await getUserBorrows(user?.address.toLowerCase()); //0x5b4d77e199fe8e5090009c72d2a5581c74febe89
       const borrowHistory = (borrowData && borrowData?.borrows) || [];
       setAssetList(borrowHistory);
     })();
   }, [user?.address]);
 
+  const fetchAssets = async () => {
+    const borrowData = await getUserBorrows(user?.address.toLowerCase());
+    const borrowHistory = (borrowData && borrowData?.borrows) || [];
+    setAssetList(borrowHistory);
+  };
+
   const handleRepay = async (asset: any) => {
-    repay(provider, user);
+    const resp = await repay(provider, user, asset);
+    if (resp && resp.hash) {
+      await fetchAssets();
+    }
   };
 
   return (
@@ -43,7 +52,7 @@ export default function AssetsToSupply() {
                           Balance
                         </th>
                         <th scope="col" className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
-                          USD
+                          Price
                         </th>
                         <th scope="col" className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
                           Action
@@ -66,7 +75,7 @@ export default function AssetsToSupply() {
                               {(asset.amount / Math.pow(10, asset.userReserve.reserve.decimals)) * asset.assetPriceUSD} $
                             </td>
                             <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                              <button className="text-orange-600 hover:text-orange-900" onClick={handleRepay}>
+                              <button className="text-orange-600 hover:text-orange-900" onClick={() => handleRepay(asset)}>
                                 Repay
                               </button>
                             </td>

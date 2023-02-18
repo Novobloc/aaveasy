@@ -171,7 +171,7 @@ export const fetchOnlyUserReservesQuery = (address: string) => {
   const query = `
   {
     user(id: ${JSON.stringify(address)}) {
-      reserves {
+      reserves(where: {currentATokenBalance_gt: "0"}) {
         currentATokenBalance
         reserve {
           name

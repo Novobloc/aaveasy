@@ -25,62 +25,65 @@ export const getPool = (arcanaProvider: any) => {
   });
 };
 
-export const supply = async (arcanaProvider: any, user: any) => {
+export const supply = async (arcanaProvider: any, user: any, asset: any) => {
   const pool = getPool(arcanaProvider);
 
   const txs = await pool.supply({
-    user: user.address || "0xb21654C6A18D2d4446548a534b8E8e87BBEfA0EC", // "0xb21654C6A18D2d4446548a534b8E8e87BBEfA0EC", // user wallet address
-    reserve: "0x07C725d58437504CA5f814AE406e70E21C5e8e9e", //underlying asset address
-    amount: "0.12"
+    user: user.address, // "0xb21654C6A18D2d4446548a534b8E8e87BBEfA0EC", // user wallet address
+    reserve: asset.underlyingAsset, //underlying asset address
+    amount: "2"
   });
 
-  await sendTransaction(arcanaProvider, txs);
+  const response = await sendTransaction(arcanaProvider, txs);
+  return response;
 };
 
-export const withdraw = async (arcanaProvider: any, user: any) => {
+export const withdraw = async (arcanaProvider: any, user: any, asset: any) => {
   const pool = getPool(arcanaProvider);
 
   const txs = await pool.withdraw({
     user: user?.address, // user wallet address
-    reserve: GOERLI_LINK_ADDRESS, //underlying asset address
-    amount: "2",
+    reserve: asset.underlyingAsset, //underlying asset address
+    amount: "0.1",
     aTokenAddress: "0x6A639d29454287B3cBB632Aa9f93bfB89E3fd18f", //aLINK
     onBehalfOf: user?.address
   });
 
-  await sendTransaction(arcanaProvider, txs);
+  const response = await sendTransaction(arcanaProvider, txs);
+  return response;
 };
 
-export const borrow = async (arcanaProvider: any, user: any) => {
+export const borrow = async (arcanaProvider: any, user: any, asset: any) => {
   try {
     const pool = getPool(arcanaProvider);
 
     const txs = await pool.borrow({
-      user: user.address || "0xb21654C6A18D2d4446548a534b8E8e87BBEfA0EC", // "0xb21654C6A18D2d4446548a534b8E8e87BBEfA0EC", // user wallet address
-      reserve: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE", //underlying asset address
+      user: user.address, // "0xb21654C6A18D2d4446548a534b8E8e87BBEfA0EC", // user wallet address
+      reserve: asset.underlyingAsset, //underlying asset address
       amount: "1",
       interestRateMode: InterestRate.Stable,
-      onBehalfOf: user.address || "0xb21654C6A18D2d4446548a534b8E8e87BBEfA0EC",
-      debtTokenAddress: "0xff3284Be0C687C21cCB18a8e61a27AeC72C520bc"
+      onBehalfOf: user.address
     });
 
     console.log("txs : ", txs);
 
-    await sendTransaction(arcanaProvider, txs);
+    const response = await sendTransaction(arcanaProvider, txs);
+    return response;
   } catch (error) {
     console.log(error, "errro");
   }
 };
 
-export const repay = async (arcanaProvider: any, user: any) => {
+export const repay = async (arcanaProvider: any, user: any, asset: any) => {
   const pool = getPool(arcanaProvider);
   const txs = await pool.repay({
-    user: user.address || "0xb21654C6A18D2d4446548a534b8E8e87BBEfA0EC", // "0xb21654C6A18D2d4446548a534b8E8e87BBEfA0EC", // user wallet address
-    reserve: GOERLI_LINK_ADDRESS, //underlying asset address
+    user: user.address, // "0xb21654C6A18D2d4446548a534b8E8e87BBEfA0EC", // user wallet address
+    reserve: asset.underlyingAsset, //underlying asset address
     amount: "1",
     interestRateMode: InterestRate.Stable,
-    onBehalfOf: user.address || "0xb21654C6A18D2d4446548a534b8E8e87BBEfA0EC"
+    onBehalfOf: user.address
   });
 
-  await sendTransaction(arcanaProvider, txs);
+  const response = await sendTransaction(arcanaProvider, txs);
+  return response;
 };
