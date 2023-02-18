@@ -134,40 +134,6 @@ export const fetchUserQuery = (address: string) => {
   return query;
 };
 
-
-// fetch all reserves
-export const fetchReservesQuery = () => {
-  const query = `{
-    reserves {
-      id
-      symbol
-      name
-      decimals
-      underlyingAsset
-      usageAsCollateralEnabled
-      reserveFactor
-      baseLTVasCollateral
-      averageStableRate
-      stableDebtLastUpdateTimestamp
-      liquidityIndex
-      reserveLiquidationThreshold
-      reserveLiquidationBonus
-      variableBorrowIndex
-      variableBorrowRate
-      liquidityRate
-      totalPrincipalStableDebt
-      totalScaledVariableDebt
-      lastUpdateTimestamp
-      availableLiquidity
-      stableBorrowRate
-      totalLiquidity
-      price {
-        priceInEth
-      }
-    }
-  }`;
-  return query;
-}
 export const fetchBorrowsQuery = (address: string) => {
   const query = `
   {
@@ -282,5 +248,32 @@ export const fetchUserSuppliesQuery = (address: string) => {
     }
   }
 }`;
+  return query;
+};
+
+// fetch all reserves
+export const fetchReservesQuery = () => {
+  const query = `{
+    reserves {
+      id
+      borrowingEnabled
+      lastUpdateTimestamp
+      isActive
+      name
+      reserveFactor
+      totalATokenSupply
+      symbol
+      underlyingAsset
+      averageStableRate
+      decimals
+      liquidityRate
+      supplies(first: 2, orderBy: id) {
+        assetPriceUSD
+        action
+        amount
+        txHash
+      }
+    }
+  }`;
   return query;
 };

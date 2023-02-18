@@ -3,6 +3,7 @@ import { aaveMarketInfo } from "../../utils/functions";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/20/solid";
 import { useAuth } from "@arcana/auth-react";
 import { supply, borrow } from "../../utils/aaveFunctions";
+import { getAllReserves } from "../../utils/graph";
 
 const initialAssetList = [
   {
@@ -32,8 +33,9 @@ export default function MarketInfo() {
 
   useEffect(() => {
     (async () => {
-      const data = await aaveMarketInfo();
-      setAssetList(data);
+      const reserveData = await getAllReserves();
+      const reserves = reserveData.reserves;
+      setAssetList(reserves);
     })();
   }, []);
 
@@ -68,10 +70,10 @@ export default function MarketInfo() {
                           isActive
                         </th>
                         <th scope="col" className="sticky top-0 px-6 py-3 text-left text-sm font-semibold text-gray-900">
-                          APY
+                          Reserve Factor
                         </th>
                         <th scope="col" className="sticky top-0 px-6 py-3 text-left text-sm font-semibold text-gray-900">
-                          totalBorrowsUSD
+                          Price
                         </th>
                         <th scope="col" className="sticky top-0 px-6 py-3 text-left text-sm font-semibold text-gray-900">
                           Action
@@ -97,8 +99,8 @@ export default function MarketInfo() {
                               </div>
                             </td>
                             <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.isActive ? "YES" : "NO"}</td>
-                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{Number(asset.interestPerSecond).toFixed(4)}%</td>
-                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{Number(asset.totalBorrowsUSD).toFixed(2)} USD</td>
+                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{Number(asset.reserveFactor)}</td>
+                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.supplies[0].assetPriceUSD} $</td>
                             <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                               <a href={asset.explorerLink} className="text-orange-600 hover:text-orange-900">
                                 Buy / Sell
@@ -115,7 +117,7 @@ export default function MarketInfo() {
                               )}
                             </td>
                             <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
-                              <a href={`https://mumbai.polygonscan.com/address/${asset.underlyingAsset}`} target="_blank" rel="noreferrer">
+                              <a href={`https://goerli.etherscan.io/address/${asset.underlyingAsset}`} target="_blank" rel="noreferrer">
                                 <ArrowTopRightOnSquareIcon />
                               </a>
                             </td>
