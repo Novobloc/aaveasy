@@ -1,25 +1,40 @@
 import React, { useEffect, useState } from "react";
-import { getUserBalance } from "../../utils/graph";
+import { getUserReserves } from "../../utils/graph";
 import { useAuth } from "@arcana/auth-react";
-import { ArrowTopRightOnSquareIcon } from "@heroicons/react/20/solid";
+import { ArrowTopRightOnSquareIcon, CheckIcon, ArrowRightIcon } from "@heroicons/react/20/solid";
+import { getAllBalances } from "../../utils/functions";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Balance() {
   const { user }: any = useAuth();
   const [userBalance, setUserBalance] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
       console.log(user?.address, "user?.address");
-      const balanceData = await getUserBalance("0x5b4d77e199fe8e5090009c72d2a5581c74febe89");
-      const balance = balanceData?.users[0].reserves;
-      console.log(balance, "balance");
-      setUserBalance(balance);
+      const balanceData: any = await getAllBalances("0x5B4d77e199FE8e5090009C72d2a5581C74FEbE89");
+      setUserBalance(balanceData);
     })();
   }, [user?.address]);
 
+  const goToBalances = () => {
+    return navigate("/user/balances");
+  };
+
   return (
     <div>
-      <h2 className="leading-6 text-xl font-semibold text-gray-900  lg:-mx-2">Balance</h2>
+      <div>
+        <h2 className="leading-6 text-xl font-semibold text-gray-900  lg:-mx-2">Balance</h2>
+        <div className="bg-gray-50 px-4 text-right sm:px-6 -my-4">
+          <button type="submit" className="inline-flex text-orange-600 hover:text-orange-900" onClick={goToBalances}>
+            {" "}
+            View All
+            <ArrowRightIcon className="h-5 w-5 ml-2" aria-hidden="true" />
+          </button>
+        </div>
+      </div>
+
       <div className="mt-4 flex flex-col">
         <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full align-middle ">
@@ -40,14 +55,13 @@ export default function Balance() {
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
                   {userBalance &&
-                    userBalance.map((transaction: any) => (
-                      <tr key={transaction.symbol}>
-                        <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-6">{transaction.reserve.symbol}</td>
-                        <td className="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
-                          {(Number(transaction.currentATokenBalance) / Math.pow(10, transaction.reserve.decimals)).toFixed(1)}
-                        </td>
+                    userBalance.length > 0 &&
+                    userBalance.slice(0, 2).map((transaction: any, i) => (
+                      <tr key={i}>
+                        <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-6">{transaction?.meta?.symbol || ""}</td>
+                        <td className="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">{transaction.amount || ""}</td>
                         <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
-                          <a href={`https://goerli.etherscan.io/address/${transaction.reserve.underlyingAsset}`} target="_blank" rel="noreferrer">
+                          <a href={transaction.meta.viewURL || ""} target="_blank" rel="noreferrer">
                             <ArrowTopRightOnSquareIcon width={15} />
                           </a>
                         </td>

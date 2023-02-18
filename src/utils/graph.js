@@ -1,5 +1,14 @@
 import { createClient } from "urql";
-import { fetchUserTransactionsQuery, fetchUserReservesQuery, fetchUserQuery, fetchReservesQuery } from "./graphQueries";
+import {
+  fetchUserTransactionsQuery,
+  fetchUserReservesQuery,
+  fetchUserQuery,
+  fetchBorrowsQuery,
+  fetchReservesQuery,
+  fetchOnlyUserReservesQuery,
+  fetchUserBorrowsQuery,
+  fetchUserSuppliesQuery
+} from "./graphQueries";
 
 const config = {
   GRAPH_PROTOCOL: {
@@ -37,16 +46,48 @@ export const getUserBalance = async (address) => {
   return response.data;
 };
 
+export const getBorrowHistory = async (address) => {
+  const query = fetchBorrowsQuery(address);
+  const client = createClient({
+    url: API_URL
+  });
+  const response = await client.query(query).toPromise();
+  return response.data;
+};
+
+export const getOnlyUserReserves = async (address) => {
+  const query = fetchOnlyUserReservesQuery(address);
+  const client = createClient({
+    url: API_URL
+  });
+  const response = await client.query(query).toPromise();
+  return response.data;
+};
+
+export const getUserBorrows = async (address) => {
+  const query = fetchUserBorrowsQuery(address);
+  const client = createClient({
+    url: API_URL
+  });
+  const response = await client.query(query).toPromise();
+  return response.data;
+};
+
+export const getUserSupplies = async (address) => {
+  const query = fetchUserSuppliesQuery(address);
+  const client = createClient({
+    url: API_URL
+  });
+  const response = await client.query(query).toPromise();
+  return response.data;
+};
+
 // get all reverves
 export const getAllReserves = async () => {
-
   const query = fetchReservesQuery();
   const client = createClient({
     url: API_URL
   });
   const response = await client.query(query).toPromise();
   return response.data;
-
-
-}
-
+};

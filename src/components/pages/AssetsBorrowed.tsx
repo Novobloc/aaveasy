@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getAllBalances } from "../../utils/functions";
 import { useAuth } from "@arcana/auth-react";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { repay } from "../../utils/aaveFunctions";
+import { getUserBorrows } from "../../utils/graph";
 
 export default function AssetsToSupply() {
   const [assetList, setAssetList] = useState([]);
@@ -10,8 +10,9 @@ export default function AssetsToSupply() {
 
   useEffect(() => {
     (async () => {
-      const data: any = await getAllBalances(user?.address);
-      setAssetList(data);
+      const borrowData = await getUserBorrows("0x5b4d77e199fe8e5090009c72d2a5581c74febe89");
+      const borrowHistory = borrowData.borrows;
+      setAssetList(borrowHistory);
     })();
   }, [user?.address]);
 
@@ -42,7 +43,7 @@ export default function AssetsToSupply() {
                           Balance
                         </th>
                         <th scope="col" className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
-                          APY
+                          USD
                         </th>
                         <th scope="col" className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
                           Action
@@ -56,17 +57,21 @@ export default function AssetsToSupply() {
                       {assetList &&
                         assetList.length > 0 &&
                         assetList.map((asset: any) => (
-                          <tr key={asset.contractAddress}>
-                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.meta.symbol}</td>
-                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.amount}</td>
-                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.amount} %</td>
+                          <tr key={asset.id}>
+                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.userReserve.reserve.symbol}</td>
+                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                              {asset.amount / Math.pow(10, asset.userReserve.reserve.decimals)}
+                            </td>
+                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                              {(asset.amount / Math.pow(10, asset.userReserve.reserve.decimals)) * asset.assetPriceUSD} $
+                            </td>
                             <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                               <button className="text-orange-600 hover:text-orange-900" onClick={handleRepay}>
                                 Repay
                               </button>
                             </td>
                             <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
-                              <a href={asset.meta.viewURL} className="text-orange-600 hover:text-orange-900">
+                              <a className="text-orange-600 hover:text-orange-900">
                                 <ArrowRightIcon />
                               </a>
                             </td>

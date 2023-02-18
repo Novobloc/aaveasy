@@ -15,6 +15,7 @@ export const fetchUserTransactionsQuery = (address: string) => {
             reserve {
               symbol
               decimals
+              underlyingAsset
             }
             assetPriceUSD
           }
@@ -36,6 +37,7 @@ export const fetchUserTransactionsQuery = (address: string) => {
             reserve {
               symbol
               decimals
+              underlyingAsset
             }
             assetPriceUSD
           }
@@ -90,6 +92,20 @@ export const fetchUserReservesQuery = (address: string) => {
         timestamp
         txHash
       }
+      currentATokenBalance
+    reserve {
+      aToken {
+        underlyingAssetAddress
+        underlyingAssetDecimals
+      }
+      decimals
+      name
+      totalATokenSupply
+      totalSupplies
+      underlyingAsset
+    }
+    currentTotalDebt
+    currentStableDebt
     }
   }`;
   return query;
@@ -152,3 +168,119 @@ export const fetchReservesQuery = () => {
   }`;
   return query;
 }
+export const fetchBorrowsQuery = (address: string) => {
+  const query = `
+  {
+    borrows(where: {user: ${JSON.stringify(address)}}) {
+      amount
+      action
+      assetPriceUSD
+      borrowRate
+      borrowRateMode
+      id
+      stableTokenDebt
+      timestamp
+      txHash
+      variableTokenDebt
+      reserve {
+        decimals
+        name
+        symbol
+        id
+        availableLiquidity
+        aToken {
+          id
+          underlyingAssetAddress
+          underlyingAssetDecimals
+     
+        }
+      }
+    }
+  }
+  `;
+  return query;
+};
+
+export const fetchOnlyUserReservesQuery = (address: string) => {
+  const query = `
+  {
+    user(id: ${JSON.stringify(address)}) {
+      reserves {
+        currentATokenBalance
+        reserve {
+          name
+          underlyingAsset
+          decimals
+          symbol
+          isActive
+          id
+        }
+        id
+        aTokenBalanceHistory {
+          currentATokenBalance
+          id
+          scaledATokenBalance
+        }
+        supplyHistory {
+          amount
+          assetPriceUSD
+          action
+          txHash
+          id
+        }
+      }
+    }
+  }
+  `;
+  return query;
+};
+
+export const fetchUserBorrowsQuery = (address: string) => {
+  const query = `
+  {
+      borrows(where: {user_: {id: ${JSON.stringify(address)}}}) {
+        id
+        action
+        amount
+        assetPriceUSD
+        txHash
+        userReserve {
+          currentATokenBalance
+          reserve {
+            decimals
+            name
+            borrowingEnabled
+            isActive
+            symbol
+          }
+        }
+      }
+  }`;
+  return query;
+};
+
+export const fetchUserSuppliesQuery = (address: string) => {
+  const query = `
+ 
+{
+  supplies(
+    where: {user: ${JSON.stringify(address)}}
+    orderBy: timestamp
+  ) {
+    amount
+    assetPriceUSD
+    txHash
+    action
+    timestamp
+    userReserve {
+      currentATokenBalance
+    }
+    reserve {
+      decimals
+      symbol
+      name
+    }
+  }
+}`;
+  return query;
+};

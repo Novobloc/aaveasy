@@ -56,10 +56,15 @@ export default function Example() {
 
   return (
     <div>
-      <h2 className="leading-6 text-xl font-semibold text-gray-900 lg:-mx-2">Net Worth</h2>
-      <ul role="list" className="mt-3 ">
+      {/* <h2 className="leading-6 text-xl font-semibold text-gray-900 lg:-mx-2">Trade Crypto with Fiat</h2> */}
+      {/* <h4> Buy & Sell crypto with fiat</h4> */}
+      <div className="border-b border-gray-200 pt-2">
+        <h2 className="leading-6 text-xl font-semibold tracking-tight text-gray-900">Trade Crypto with Fiat</h2>
+        <p className="mt-4 text-base text-gray-500">Buy & Sell crypto easily with fiat and add to your wallet</p>
+      </div>
+      <ul role="list" className="mt-2 pb-2">
         <li className="col-span-1 flex rounded-md shadow-sm">
-          <CurrencyDollarIcon className="h-16 w-16 " aria-hidden="true" />
+          {/* <CurrencyDollarIcon className="h-16 w-16 " aria-hidden="true" />
           <div className="flex flex-1 items-center justify-between truncate rounded-r-md border-t border-r border-b border-gray-200 bg-white">
             <div className="flex-1 truncate px-4 py-2 text-sm">
               <a href={project.href} className="font-medium text-gray-900 hover:text-gray-600">
@@ -77,13 +82,13 @@ export default function Example() {
                 <ArrowRightIcon className="h-5 w-5" aria-hidden="true" />
               </button>
             </div>
-          </div>
+          </div> */}
         </li>
-        <li className="col-span-1 flex rounded-md shadow-sm mt-5">
+        <li className="col-span-1 flex rounded-md shadow-sm mt-4">
           <button
             type="button"
             onClick={() => openTransak("BUY")}
-            className="mr-7 ml-7 inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            className="mr-7 inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
             <ArrowDownIcon className="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
             Buy Crypto
           </button>
