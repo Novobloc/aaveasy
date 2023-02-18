@@ -43,8 +43,10 @@ Video : <a style="margin-bottom: 5px;" href="" target="_blank"> Youtube Link </a
 
 2. Blockchain :
    1. Arcana: We used **Arcana SDK** for like social login and wallet.
-   2. Chain: **Ethereum Goerli** to connect with blockchain on testnet.
-   3. RPC URL : We used **Quick Node** Ethereum RPC url to connect to the goerli chain.
+   2. Aave: We used **Aave SDK** to connect with Aave protocol.
+   3. Graph Protocal: We used subgraph to fetch the price of assets of aave.
+   4. Chain: **Ethereum Goerli** to connect with blockchain on testnet.
+   5. RPC URL : We used **Quick Node** Ethereum RPC url to connect to the goerli chain.
 
 
 
