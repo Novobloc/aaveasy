@@ -62,7 +62,7 @@ export default function Header() {
             <button
               disabled={false}
               onClick={connectWallet}
-              className="flex w-44 justify-center font-thin bg-gradient-to-r from-cyan-500 via-blue-400  to-fuchsia-500   rounded-md  border border-transparent bg-gray-900 py-1 px-0 text-base text-white shadow hover:bg-black focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-rose-500">
+              className="flex w-44 justify-center font-extralight bg-gradient-to-r from-cyan-500 via-blue-400  to-fuchsia-500   rounded-md  border border-transparent bg-gray-900 py-1 px-0 text-base text-white shadow hover:bg-black focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-1 focus:ring-offset-slate-500">
               Connect Wallet
             </button>
           )}
