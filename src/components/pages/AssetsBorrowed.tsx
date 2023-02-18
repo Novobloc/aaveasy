@@ -36,7 +36,7 @@ export default function AssetsToSupply() {
       <section aria-labelledby="billing-history-heading">
         <div className="bg-white pt-6 shadow sm:overflow-hidden sm:rounded-md">
           <div className="px-4 sm:px-6">
-            <h2 id="billing-history-heading" className="leading-6 text-xl font-semibold text-gray-900">
+            <h2 id="billing-history-heading" className="leading-6 text-xl font-normal text-gray-900">
               Borrowed Assets
             </h2>
           </div>

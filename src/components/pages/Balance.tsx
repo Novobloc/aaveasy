@@ -27,9 +27,9 @@ export default function Balance() {
   return (
     <div>
       <div>
-        <h2 className="leading-6 text-xl font-semibold text-gray-900  lg:-mx-2">Balance</h2>
+        <h2 className="leading-6 text-xl font-semibold text-gray-900 font-sans  lg:-mx-2">Balance</h2>
         <div className="bg-gray-50 px-4 text-right sm:px-6 -my-4">
-          <button type="submit" className="inline-flex text-orange-600 hover:text-orange-900" onClick={goToBalances}>
+          <button type="submit" className="uppercase inline-flex text-orange-600 hover:text-orange-900" onClick={goToBalances}>
             {" "}
             View All
             <ArrowRightIcon className="h-5 w-5 ml-2" aria-hidden="true" />
