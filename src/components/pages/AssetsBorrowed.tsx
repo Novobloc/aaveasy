@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "@arcana/auth-react";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { repay } from "../../utils/aaveFunctions";
-import { getUserBorrows } from "../../utils/graph";
+import { getOnlyUserReserves } from "../../utils/graph";
 
 export default function AssetsToSupply() {
   const [assetList, setAssetList] = useState([]);
@@ -10,16 +10,18 @@ export default function AssetsToSupply() {
 
   useEffect(() => {
     (async () => {
-      const borrowData = await getUserBorrows(user?.address.toLowerCase()); //0x5b4d77e199fe8e5090009c72d2a5581c74febe89
-      const borrowHistory = (borrowData && borrowData?.borrows) || [];
-      setAssetList(borrowHistory);
+      await fetchAssets();
     })();
   }, [user?.address]);
 
   const fetchAssets = async () => {
-    const borrowData = await getUserBorrows(user?.address.toLowerCase());
-    const borrowHistory = (borrowData && borrowData?.borrows) || [];
-    setAssetList(borrowHistory);
+    const borrowData = await getOnlyUserReserves(user?.address.toLowerCase());
+    const promise = borrowData?.user?.reserves.filter((item: any) => {
+      return item.borrowHistory.length && item.currentTotalDebt !== "0";
+    });
+    const borrowsList: any = await Promise.all(promise);
+    console.log(borrowsList, "borrowsList");
+    setAssetList(borrowsList);
   };
 
   const handleRepay = async (asset: any) => {
@@ -67,12 +69,12 @@ export default function AssetsToSupply() {
                         assetList.length > 0 &&
                         assetList.map((asset: any) => (
                           <tr key={asset.id}>
-                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.userReserve.reserve.symbol}</td>
+                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.reserve.symbol}</td>
                             <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                              {asset.amount / Math.pow(10, asset.userReserve.reserve.decimals)}
+                              {(asset.currentTotalDebt / Math.pow(10, asset.reserve.decimals)).toFixed(2)}
                             </td>
                             <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                              {(asset.amount / Math.pow(10, asset.userReserve.reserve.decimals)) * asset.assetPriceUSD} $
+                              {((asset.currentTotalDebt / Math.pow(10, asset.reserve.decimals)) * asset.borrowHistory[0].assetPriceUSD).toFixed(2)} $
                             </td>
                             <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                               <button className="text-orange-600 hover:text-orange-900" onClick={() => handleRepay(asset)}>

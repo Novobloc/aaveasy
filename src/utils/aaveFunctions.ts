@@ -27,7 +27,6 @@ export const getPool = (arcanaProvider: any) => {
 
 export const supply = async (arcanaProvider: any, user: any, asset: any) => {
   const pool = getPool(arcanaProvider);
-
   const txs = await pool.supply({
     user: user.address, // "0xb21654C6A18D2d4446548a534b8E8e87BBEfA0EC", // user wallet address
     reserve: asset.underlyingAsset, //underlying asset address
@@ -40,12 +39,12 @@ export const supply = async (arcanaProvider: any, user: any, asset: any) => {
 
 export const withdraw = async (arcanaProvider: any, user: any, asset: any) => {
   const pool = getPool(arcanaProvider);
-
+  const withdrawalAmount = (asset.currentATokenBalance / Math.pow(10, asset.reserve.decimals)).toString() || "1";
   const txs = await pool.withdraw({
     user: user?.address, // user wallet address
-    reserve: asset.underlyingAsset, //underlying asset address
-    amount: "0.1",
-    aTokenAddress: "0x6A639d29454287B3cBB632Aa9f93bfB89E3fd18f", //aLINK
+    reserve: asset.reserve.underlyingAsset, //underlying asset address
+    amount: withdrawalAmount,
+    aTokenAddress: asset.reserve.aToken.id, //aLINK
     onBehalfOf: user?.address
   });
 
@@ -56,11 +55,10 @@ export const withdraw = async (arcanaProvider: any, user: any, asset: any) => {
 export const borrow = async (arcanaProvider: any, user: any, asset: any) => {
   try {
     const pool = getPool(arcanaProvider);
-
     const txs = await pool.borrow({
       user: user.address, // "0xb21654C6A18D2d4446548a534b8E8e87BBEfA0EC", // user wallet address
       reserve: asset.underlyingAsset, //underlying asset address
-      amount: "1",
+      amount: "10",
       interestRateMode: InterestRate.Stable,
       onBehalfOf: user.address
     });
@@ -78,8 +76,8 @@ export const repay = async (arcanaProvider: any, user: any, asset: any) => {
   const pool = getPool(arcanaProvider);
   const txs = await pool.repay({
     user: user.address, // "0xb21654C6A18D2d4446548a534b8E8e87BBEfA0EC", // user wallet address
-    reserve: asset.underlyingAsset, //underlying asset address
-    amount: "1",
+    reserve: asset.userReserve.reserve.underlyingAsset, //underlying asset address
+    amount: asset.currentStableDebt || "1",
     interestRateMode: InterestRate.Stable,
     onBehalfOf: user.address
   });

@@ -171,9 +171,12 @@ export const fetchOnlyUserReservesQuery = (address: string) => {
   const query = `
   {
     user(id: ${JSON.stringify(address)}) {
-      reserves(where: {currentATokenBalance_gt: "0"}) {
+      reserves {
         currentATokenBalance
         reserve {
+          aToken {
+            id
+          }
           name
           underlyingAsset
           decimals
@@ -194,6 +197,17 @@ export const fetchOnlyUserReservesQuery = (address: string) => {
           txHash
           id
         }
+        borrowHistory {
+          action
+          amount
+          assetPriceUSD
+          id
+          txHash
+        }
+        currentStableDebt
+        currentTotalDebt
+        currentVariableDebt
+        principalStableDebt
       }
     }
   }
@@ -213,7 +227,11 @@ export const fetchUserBorrowsQuery = (address: string) => {
         userReserve {
           currentATokenBalance
           reserve {
+            aToken {
+              id
+            }
             decimals
+            underlyingAsset
             name
             borrowingEnabled
             isActive

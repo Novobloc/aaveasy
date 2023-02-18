@@ -16,8 +16,12 @@ export default function AssetsToSupply() {
 
   const fetchAssets = async () => {
     const supplyData = await getOnlyUserReserves(user?.address.toLowerCase());
-    const supplyHistory = supplyData?.user?.reserves || [];
-    setAssetList(supplyHistory);
+    const promise = supplyData?.user?.reserves.filter((item: any) => {
+      return item.supplyHistory.length;
+    });
+    const suppliesList: any = await Promise.all(promise);
+    console.log(suppliesList, "suppliesList");
+    setAssetList(suppliesList);
   };
 
   const handleWithDraw = async (asset: any) => {
