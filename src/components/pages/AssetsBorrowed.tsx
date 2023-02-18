@@ -11,7 +11,7 @@ export default function AssetsToSupply() {
   useEffect(() => {
     (async () => {
       const borrowData = await getUserBorrows(user?.address); //0x5b4d77e199fe8e5090009c72d2a5581c74febe89
-      const borrowHistory = borrowData.borrows;
+      const borrowHistory = (borrowData && borrowData?.borrows) || [];
       setAssetList(borrowHistory);
     })();
   }, [user?.address]);
@@ -77,7 +77,7 @@ export default function AssetsToSupply() {
                             </td>
                           </tr>
                         ))}
-                      {assetList.length === 0 && (
+                      {assetList && assetList.length === 0 && (
                         <tr className="whitespace-nowrap px-6 py-4 text-sm text-gray-500 text-center w-full ">No Records Found</tr>
                       )}
                     </tbody>

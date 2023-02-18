@@ -56,7 +56,7 @@ export default function UserAllBalances() {
                           {userBalance &&
                             userBalance.length > 0 &&
                             userBalance.map((transaction: any, i) => (
-                              <tr key={transaction.id}>
+                              <tr key={i}>
                                 <td className="whitespace-nowrap py-3.5 pl-6 text-sm text-gray-500 sm:pl-0">{transaction?.meta?.symbol || ""}</td>
                                 <td className="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">{transaction.amount || ""}</td>
                                 <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">

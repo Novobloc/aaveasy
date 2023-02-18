@@ -27,6 +27,7 @@ export const getAllBalances = async (walletAddress: string) => {
       const metaData = await getTokenMetaData(item.contractAddress);
       if (metaData) {
         const amount = item.tokenBalance / Math.pow(10, metaData.decimals);
+
         item.meta = metaData;
         item.amount = amount.toFixed(2);
         item.meta.viewURL = `https://goerli.etherscan.io/address/${walletAddress}#tokentxns`;

@@ -67,7 +67,7 @@ export default function Balance() {
                         </td>
                       </tr>
                     ))}
-                  {userBalance.length === 0 && (
+                  {userBalance && userBalance.length === 0 && (
                     <tr className="whitespace-nowrap px-6 py-4 text-sm text-gray-500 text-center w-full ">No Records Found</tr>
                   )}
                 </tbody>

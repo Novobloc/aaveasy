@@ -19,12 +19,11 @@ export default function Example() {
     const onRampParams = {
       apiKey: "69feba7f-a1c2-4cfa-a9bd-43072768b0e6",
       environment: "STAGING",
-      cryptoCurrencyCode: "USDC",
       fiatCurrency: "EUR",
       fiatAmount: "44",
       walletAddress: user?.address,
       email: user?.email,
-      network: "polygon",
+      network: "ethereum",
       productsAvailed,
       widgetHeight: "700px",
       widgetWidth: "450px"
