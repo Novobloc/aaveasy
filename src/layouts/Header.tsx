@@ -51,7 +51,7 @@ export default function Header() {
         <div className="relative flex flex-col md:flex-row">
           <Link to="/" className="flex items-center mb-5 font-medium text-gray-900 lg:w-auto lg:items-center lg:justify-center md:mb-0">
             <button className="flex items-center justify-center w-8 h-8 mr-3 text-white bg-gradient-to-r from-cyan-500  to-fuchsia-500 rounded-full border-slate-400 focus:outline-none"></button>
-            <span className="mx-auto ml-0 text-xl tracking-widest uppercase  leading-none text-transparent font-thin  text-slate-900 select-none">
+            <span className="mx-auto ml-0 text-xl tracking-widest uppercase  leading-none  font-thin  text-slate-900 select-none">
               Aaveasy
             </span>
           </Link>
