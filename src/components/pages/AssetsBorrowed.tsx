@@ -17,7 +17,7 @@ export default function AssetsToSupply() {
   const fetchAssets = async () => {
     const borrowData = await getOnlyUserReserves(user?.address.toLowerCase());
     const promise = borrowData?.user?.reserves.filter((item: any) => {
-      return item.borrowHistory.length && item.currentTotalDebt !== "0";
+      return item.borrowHistory.length && (item.currentTotalDebt / Math.pow(10, item.reserve.decimals)).toFixed(0) != "0";
     });
     const borrowsList: any = await Promise.all(promise);
     console.log(borrowsList, "borrowsList");
