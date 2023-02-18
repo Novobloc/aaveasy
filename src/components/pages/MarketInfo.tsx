@@ -5,30 +5,8 @@ import { useAuth } from "@arcana/auth-react";
 import { supply, borrow } from "../../utils/aaveFunctions";
 import { getAllReserves } from "../../utils/graph";
 
-const initialAssetList = [
-  {
-    underlyingAsset: "0x6b175474e89094c44da98b954eedeac495271d0f",
-    symbol: "DAI",
-    isActive: true,
-    isFreezed: true,
-    borrowingEnabled: true,
-    stableBorrowRateEnabled: false,
-    variableBorrowRate: "0.01539236568068016961",
-    stableBorrowRate: "0.03962202772629728824",
-    liquidityRate: "0.00363689010342812663",
-    totalLiquidity: "4160898.627476978410366572",
-    lastUpdateTimestamp: 1676283659,
-    aTokenAddress: "0xfc1e690f61efd961294b3e1ce3313fbd8aa4f85d",
-    totalBorrows: "256423.850966812344867115",
-    id: "0x6b175474e89094c44da98b954eedeac495271d0f0x24a42fd28c976a61df5d00d0599c34c4f90748c8",
-    totalLiquidityUSD: "4175179.49387229818234328727",
-    totalBorrowsUSD: "257303.93843927521415157394",
-    interestPerSecond: "0.00417517949435380071"
-  }
-];
-
 export default function MarketInfo() {
-  const [assetList, setAssetList] = useState(initialAssetList);
+  const [assetList, setAssetList] = useState([]);
   const { user, provider } = useAuth();
 
   useEffect(() => {
@@ -84,9 +62,9 @@ export default function MarketInfo() {
                       </tr>
                     </thead>
                     <tbody className="bg-white">
-                      {assetList
-                        // .filter((item) => item.borrowingEnabled === true)
-                        .map((asset: any) => (
+                      {assetList &&
+                        assetList.length > 0 &&
+                        assetList.map((asset: any) => (
                           <tr key={asset.id}>
                             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
                               <div className="flex items-center">
@@ -100,9 +78,9 @@ export default function MarketInfo() {
                             </td>
                             <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.isActive ? "YES" : "NO"}</td>
                             <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{Number(asset.reserveFactor)}</td>
-                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset.supplies[0].assetPriceUSD} $</td>
+                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{asset?.supplies[0].assetPriceUSD} $</td>
                             <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                              <a href={asset.explorerLink} className="text-orange-600 hover:text-orange-900">
+                              <a href={asset.underlyingAsset} className="text-orange-600 hover:text-orange-900">
                                 Buy / Sell
                               </a>
                               &nbsp; &nbsp; &nbsp; &nbsp;
