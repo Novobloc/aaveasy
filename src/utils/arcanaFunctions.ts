@@ -1,6 +1,6 @@
 // Arcana functions
 
-import { BigNumber, providers, ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 
 export const sendTransaction = async (arcanaProvider: any, txs: any) => {
   const provider = new ethers.providers.Web3Provider(arcanaProvider);

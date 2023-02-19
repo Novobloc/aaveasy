@@ -1,15 +1,12 @@
 <br>
 
 ![Aaveasy](images/aaveasy.png)
+
 # AAVEASY
+
 ## Get the most out of the Aave protocol
 
-
 **Aaveasy** is a platform that allows users to easily interact with the **Aave** protocol. It allows users to deposit and withdraw their assets, borrow and repay their loans, and also allows users to login using their social media accounts powered by **arcana**.
-
-
-
-
 
 <br>
 
@@ -18,12 +15,9 @@
 ### Home Page
 
 ![Home](images/home.png)
- 
-
 
 <br>
 Insert gif here
-
 
 <br>
 
@@ -35,24 +29,19 @@ Video : <a style="margin-bottom: 5px;" href="" target="_blank"> Youtube Link </a
 
 ![Aaveasy](images/appflow.png)
 
-
-
-
 ## Stack We Used
+
 ![alt text](images/stack.png)
-
-
 
 1. Frontend: We used **React JS**, Tailwind CSS for UI and **ethers** library to fetch details from contract.
 
 2. Blockchain :
-   1. Arcana: We used **Arcana SDK** for like social login and wallet.
+   1. Arcana: We used **Arcana SDK** for social login and wallet.
    2. Aave: We used **Aave SDK** to connect with Aave protocol.
-   3. Graph Protocal: We used subgraph to fetch the price of assets of aave.
+   3. Graph Protocol: We used subgraph to fetch market, user reserves from aave protocol in real time.
    4. Chain: **Ethereum Goerli** to connect with blockchain on testnet.
-   5. RPC URL : We used **Quick Node** Ethereum RPC url to connect to the goerli chain.
-
-
+   5. RPC: We used **Quick Node** Ethereum RPC url to connect to the goerli chain.
+   6. OnRamp & OffRamp: We integrated **Transak** as crypto fiat gateway to buy/sell crypto easily.
 
 ## Steps to Run the Project
 

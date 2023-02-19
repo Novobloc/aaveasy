@@ -3,15 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { ellipseAddress, classNames } from "../utils";
 import { Menu, Transition, Dialog } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { ArrowTopRightOnSquareIcon, ArrowLeftOnRectangleIcon, Square2StackIcon, UserCircleIcon } from "@heroicons/react/24/outline";
+import { ArrowTopRightOnSquareIcon, ArrowLeftOnRectangleIcon, Square2StackIcon } from "@heroicons/react/24/outline";
 import { Auth, useAuth } from "@arcana/auth-react";
-
-const paths = [
-  {
-    path: "/app",
-    name: "App"
-  }
-];
 
 export default function Header() {
   const navigate = useNavigate();
@@ -51,11 +44,8 @@ export default function Header() {
         <div className="relative flex flex-col md:flex-row">
           <Link to="/" className="flex items-center mb-5 font-medium text-gray-900 lg:w-auto lg:items-center lg:justify-center md:mb-0">
             <button className="flex items-center justify-center w-8 h-8 mr-3 text-white bg-gradient-to-r from-cyan-500  to-fuchsia-500 rounded-full border-slate-400 focus:outline-none"></button>
-            <span className="mx-auto ml-0 text-xl tracking-widest uppercase  leading-none  font-thin  text-slate-900 select-none">
-              Aaveasy
-            </span>
+            <span className="mx-auto ml-0 text-xl tracking-widest uppercase  leading-none  font-thin  text-slate-900 select-none">Aaveasy</span>
           </Link>
-         
         </div>
         <div className="inline-flex items-center ml-1 space-x-5 lg:justify-end">
           {!account && (

@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Loader from "./layouts/Loader";
 import Home from "./components/Home";
 import AaveApp from "./components/AaveApp";
 import UserAllBalances from "./components/pages/UserAllBalances";
