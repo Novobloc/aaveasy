@@ -33,7 +33,7 @@ Video : <a style="margin-bottom: 5px;" href="" target="_blank"> Youtube Link </a
 
 ![alt text](images/stack.png)
 
-1. Frontend: We used **React JS**, Tailwind CSS for UI and **ethers** library to fetch details from contract.
+1. Frontend: We used **React JS**, Tailwind CSS for UI.
 
 2. Blockchain :
    1. Arcana: We used **Arcana SDK** for social login and wallet.
