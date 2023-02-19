@@ -27,7 +27,7 @@ Video : <a style="margin-bottom: 5px;" href="" target="_blank"> Youtube Link </a
 
 ## App Flow
 
-![Aaveasy](images/appflow.png)
+![Aaveasy](images/flow.png)
 
 ## Stack We Used
 
