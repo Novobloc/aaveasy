@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 import MarketPortfolio from "./pages/MarketPortfolio";
 import Statistics from "./pages/Statistics";
 

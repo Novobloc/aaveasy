@@ -27,7 +27,9 @@ export default function AssetsToSupply() {
   const handleRepay = async (asset: any) => {
     const resp = await repay(provider, user, asset);
     if (resp && resp.hash) {
-      await fetchAssets();
+      setTimeout(async () => {
+        await fetchAssets();
+      }, 3000);
     }
   };
 

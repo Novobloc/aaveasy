@@ -1,5 +1,5 @@
 import { Pool, ChainId, InterestRate } from "@aave/contract-helpers";
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import { sendTransaction } from "./arcanaFunctions";
 
 // https://docs.aave.com/developers/deployed-contracts/v3-testnet-addresses
@@ -33,6 +33,8 @@ export const supply = async (arcanaProvider: any, user: any, asset: any) => {
     amount: "2"
   });
 
+  console.log("txs : ", txs);
+
   const response = await sendTransaction(arcanaProvider, txs);
   return response;
 };
@@ -40,15 +42,17 @@ export const supply = async (arcanaProvider: any, user: any, asset: any) => {
 export const withdraw = async (arcanaProvider: any, user: any, asset: any) => {
   const pool = getPool(arcanaProvider);
   const withdrawalAmount = (asset.currentATokenBalance / Math.pow(10, asset.reserve.decimals)).toFixed(0).toString() || "1";
-  console.log(withdrawalAmount, "withdrawalAmount");
+  console.log(withdrawalAmount, "withdrawalAmount", BigNumber.from(withdrawalAmount).toString(), typeof withdrawalAmount);
 
   const txs = await pool.withdraw({
     user: user?.address, // user wallet address
     reserve: asset.reserve.underlyingAsset, //underlying asset address
-    amount: withdrawalAmount,
+    amount: "1",
     aTokenAddress: asset.reserve.aToken.id, //aLINK
     onBehalfOf: user?.address
   });
+
+  console.log("txs : ", txs);
 
   const response = await sendTransaction(arcanaProvider, txs);
   return response;
@@ -60,7 +64,7 @@ export const borrow = async (arcanaProvider: any, user: any, asset: any) => {
     const txs = await pool.borrow({
       user: user.address, // "0xb21654C6A18D2d4446548a534b8E8e87BBEfA0EC", // user wallet address
       reserve: asset.underlyingAsset, //underlying asset address
-      amount: "10",
+      amount: "1",
       interestRateMode: InterestRate.Stable,
       onBehalfOf: user.address
     });

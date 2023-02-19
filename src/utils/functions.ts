@@ -1,7 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { BigNumber, ethers } from "ethers";
 import _ from "lodash";
-//https://side-fabled-violet.ethereum-goerli.discover.quiknode.pro/16bf13dae688d98d4fed25a482585b3ede55c6e0
+
 export const getAllBalances = async (walletAddress: string) => {
   if (walletAddress) {
     const data = JSON.stringify({
@@ -68,76 +67,6 @@ export const getTokenMetaData = async (tokenAddress: string) => {
   const response: AxiosResponse = await axios(config);
   const tokenMetaData = response.data.result;
   return tokenMetaData;
-};
-
-export const getLogo = async (tokenSymbol: string) => {
-  const tokenConfig = [
-    {
-      symbol: "MATIC",
-      imageUrl: "https://assets-stg.transak.com/images/cryptoCurrency/matic-network_small.png"
-    },
-    {
-      symbol: "ETH",
-      imageUrl: "https://assets-stg.transak.com/images/cryptoCurrency/ethereum_small.png"
-    },
-    {
-      symbol: "DAI",
-      imageUrl: "https://assets-stg.transak.com/images/cryptoCurrency/dai_small.png"
-    },
-    {
-      symbol: "USDC",
-      imageUrl: "https://assets-stg.transak.com/images/cryptoCurrency/usd-coin_small.png"
-    }
-  ];
-  const logo = await tokenConfig.find((it) => tokenSymbol.includes(it.symbol))?.imageUrl;
-  return logo;
-};
-
-export const withDrawBalance = async (smartAccount: any, contractAddress: string, recipient: string, amount: BigNumber) => {
-  const erc20Interface = new ethers.utils.Interface(["function transfer(address _to, uint256 _value)"]);
-
-  // Encode an ERC-20 token transfer to recipient of the specified amount
-  const data = erc20Interface.encodeFunctionData("transfer", [recipient, amount]);
-
-  const tx1 = {
-    to: contractAddress, //APOLDAI
-    data
-  };
-
-  // Transaction subscription
-
-  smartAccount.on("txHashGenerated", (response: any) => {
-    console.log("txHashGenerated event received via emitter", response);
-  });
-
-  smartAccount.on("txMined", (response: any) => {
-    console.log("txMined event received via emitter", response);
-  });
-
-  smartAccount.on("error", (response: any) => {
-    console.log("error event received via emitter", response);
-  });
-
-  // You will first receive fee quotes from the SDK to be able to display to the user
-  const feeQuotes = await smartAccount.prepareRefundTransaction({ transaction: tx1 });
-  console.log(feeQuotes, "feeQuotes");
-
-  const transaction = await smartAccount.createRefundTransaction({
-    transaction: tx1,
-    feeQuote: feeQuotes[0] // say user chooses MATIC from above
-  });
-
-  const gasLimit = {
-    hex: "0x1E8480",
-    type: "hex"
-  };
-
-  const txId = await smartAccount.sendTransaction({
-    tx: transaction, // temp
-    gasLimit
-  });
-  console.log(txId, "txId");
-  return txId;
 };
 
 export const aaveMarketInfo = async () => {

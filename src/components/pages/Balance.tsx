@@ -14,8 +14,7 @@ export default function Balance() {
     (async () => {
       console.log(user?.address, "user?.address");
       const balanceData: any = await getAllBalances(user?.address);
-      console.log(balanceData, "b");
-
+      console.log(balanceData, "balanceData");
       setUserBalance(balanceData);
     })();
   }, [user?.address]);

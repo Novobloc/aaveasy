@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { aaveMarketInfo } from "../../utils/functions";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/20/solid";
 import { useAuth } from "@arcana/auth-react";
 import { supply, borrow } from "../../utils/aaveFunctions";
@@ -25,25 +24,19 @@ export default function MarketInfo() {
   const handleSupply = async (asset: any) => {
     const resp: any = await supply(provider, user, asset);
     if (resp && resp.hash) {
-      await fetchReserves();
+      setTimeout(async () => {
+        await fetchReserves();
+      }, 3000);
     }
   };
 
   const handleBorrow = async (asset: any) => {
     const resp = await borrow(provider, user, asset);
     if (resp && resp.hash) {
-      await fetchReserves();
+      setTimeout(async () => {
+        await fetchReserves();
+      }, 3000);
     }
-  };
-
-  const randColor = () => {
-    return (
-      "#" +
-      Math.floor(Math.random() * 16777215)
-        .toString(16)
-        .padStart(6, "0")
-        .toUpperCase()
-    );
   };
 
   return (
