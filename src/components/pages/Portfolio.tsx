@@ -1,7 +1,6 @@
 import React from "react";
 import AssetsSupplied from "./AssetsSupplied";
 import AssetsBorrowed from "./AssetsBorrowed";
-import { ArrowPathIcon } from "@heroicons/react/20/solid";
 
 export default function Portfolio() {
   return (
@@ -12,7 +11,6 @@ export default function Portfolio() {
             <h2 id="billing-history-heading" className="leading-6 text-xl font-semibold text-gray-900">
               Portfolio
             </h2>
-            <ArrowPathIcon className="h-6 w-6 ml-2 text-orange-500" />
           </div>
           <main className="mx-auto max-w-7xl ">
             <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
