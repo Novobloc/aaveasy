@@ -23,7 +23,7 @@ Insert gif here
 
 Github : <a style="margin-bottom: 5px;" href="https://github.com/Novobloc/aaveasy" target="_blank"> Repo Link </a>
 
-Video : <a style="margin-bottom: 5px;" href="" target="_blank"> Youtube Link </a>
+Video : <a style="margin-bottom: 5px;" href="https://youtu.be/kLZeHnbT0dA" target="_blank"> Youtube Link </a>
 
 ## App Flow
 
